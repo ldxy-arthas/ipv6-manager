@@ -11,7 +11,6 @@ public class Ipv6managerApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(Ipv6managerApplication.class, args);
-
         log.info("Ipv6 Manager System Starting……");
     }
 

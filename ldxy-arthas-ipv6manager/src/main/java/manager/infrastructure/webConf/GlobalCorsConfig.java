@@ -1,4 +1,4 @@
-package manager.conf;
+package manager.infrastructure.webConf;
 
 
 import org.springframework.context.annotation.Bean;
