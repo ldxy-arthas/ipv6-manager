@@ -1,0 +1,29 @@
+{
+  "name": "tongx",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.0.5",
+    "@vueuse/integrations": "^8.7.3",
+    "axios": "^0.27.2",
+    "dayjs": "^1.11.3",
+    "echarts": "^5.3.3",
+    "element-plus": "^2.2.5",
+    "screenfull": "^6.0.2",
+    "universal-cookie": "^4.0.4",
+    "vue": "^3.2.25",
+    "vue-router": "^4.0.16",
+    "vuex": "^4.0.2"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^2.3.3",
+    "vite": "^2.9.9",
+    "vite-plugin-windicss": "^1.8.4",
+    "windicss": "^3.5.4"
+  }
+}

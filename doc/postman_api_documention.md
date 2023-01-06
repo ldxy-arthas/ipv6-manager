@@ -1,0 +1,5 @@
+将json文件导入postman
+
+之后建立 ipv6manager环境
+
+写入自己对应的host和port地址

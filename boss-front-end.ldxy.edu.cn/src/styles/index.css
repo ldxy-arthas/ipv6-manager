@@ -1,0 +1,31 @@
+
+
+.question-item-rate {
+  line-height: 2.5;
+}
+
+.q-title {
+  margin: 0px 5px;
+}
+
+
+.q-item-prefix {
+  margin: 5px 10px;
+}
+
+.q-item-contain {
+  display: inline-block;
+}
+
+.q-item-content {
+  margin: 5px;
+  white-space: normal;
+}
+
+.tongx-span {
+  letter-spacing: 12px;
+  color: rgb(0, 0, 0);
+  padding-left: 12px;
+  margin: 0 5px;
+  border-bottom: 1px solid rgb(0, 0, 0)
+}

@@ -1,0 +1,169 @@
+{
+	"info": {
+		"_postman_id": "60c88edc-5124-4850-9875-4fc600d739fe",
+		"name": "ipv6manager",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "用户模块",
+			"item": [
+				{
+					"name": "用户登录",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{ipv6managerHost}}:{{ipv6managerPort}}/user/login",
+							"host": [
+								"{{ipv6managerHost}}"
+							],
+							"port": "{{ipv6managerPort}}",
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "用户注册",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{ipv6managerHost}}:{{ipv6managerPort}}/user/register",
+							"host": [
+								"{{ipv6managerHost}}"
+							],
+							"port": "{{ipv6managerPort}}",
+							"path": [
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "用户信息修改",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{ipv6managerHost}}:{{ipv6managerPort}}/user",
+							"host": [
+								"{{ipv6managerHost}}"
+							],
+							"port": "{{ipv6managerPort}}",
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "验证码获取",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ipv6managerHost}}:{{ipv6managerPort}}/code",
+							"host": [
+								"{{ipv6managerHost}}"
+							],
+							"port": "{{ipv6managerPort}}",
+							"path": [
+								"code"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ipv6信息拉取",
+			"item": []
+		},
+		{
+			"name": "业务模块",
+			"item": [
+				{
+					"name": "检查是否支持ipv6",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{ipv6managerHost}}:{{ipv6managerPort}}/checK_ipv6",
+							"host": [
+								"{{ipv6managerHost}}"
+							],
+							"port": "{{ipv6managerPort}}",
+							"path": [
+								"checK_ipv6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "获取所有的ipv6信息",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ipv6managerHost}}:{{ipv6managerPort}}/ipv6info",
+							"host": [
+								"{{ipv6managerHost}}"
+							],
+							"port": "{{ipv6managerPort}}",
+							"path": [
+								"ipv6info"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "分配ipv6到指定机器",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{ipv6managerHost}}:{{ipv6managerPort}}/set_ipv6",
+							"host": [
+								"{{ipv6managerHost}}"
+							],
+							"port": "{{ipv6managerPort}}",
+							"path": [
+								"set_ipv6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "随机分配一个ipv6地址",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{ipv6managerHost}}:{{ipv6managerPort}}/random_ipv6",
+							"host": [
+								"{{ipv6managerHost}}"
+							],
+							"port": "{{ipv6managerPort}}",
+							"path": [
+								"random_ipv6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

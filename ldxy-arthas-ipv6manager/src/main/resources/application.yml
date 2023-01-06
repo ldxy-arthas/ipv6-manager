@@ -1,0 +1,23 @@
+server:
+  port: 8080
+
+logging:
+  file:
+    name: logs/ipv6manager.log
+  level:
+    root: info
+  pattern:
+    dateformat: yyyy-MM-dd HH:mm:ss.SSS,GMT+8
+
+spring:
+  application:
+    name: ipv6manager
+
+  profiles:
+    active: dev
+
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+  main:
+    allow-bean-definition-overriding: true
