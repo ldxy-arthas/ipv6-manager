@@ -44,7 +44,7 @@
 
 数据库：mongodb
 
-boot：spring boot 3.0.0
+boot：spring boot 3.0
 
 jdk：jdk17
 
@@ -68,14 +68,14 @@ jdk：jdk17
 
 ### 分支说明
 
-| 分支              | 概述                                                    |
-| ----------------- | ------------------------------------------------------- |
-| master            | 主分支，发布新功能（稳定）                              |
-| patch/version_x.x | 补丁分支（对应版本的bug修复）                           |
-| dev               | 开发分支（内部开发用的分支，不稳定，功能可用，可测试）  |
+| 分支                | 概述                            |
+|-------------------|-------------------------------|
+| master            | 主分支，发布新功能（稳定）                 |
+| patch/version_x.x | 补丁分支（对应版本的bug修复）              |
+| dev               | 开发分支（内部开发用的分支，不稳定，功能可用，可测试）   |
 | feature           | 开发分支，开发新功能，或者修复bug，全部基于这个分支操作 |
-| dev-feature       | 功能开发分支组                                          |
-| dev-fix           | 功能bug修复分支组                                       |
+| dev-feature       | 功能开发分支组                       |
+| dev-fix           | 功能bug修复分支组                    |
 
 
 
@@ -121,7 +121,75 @@ jdk：jdk17
 
 ### Postman接口文档
 
+## 数据库字段
+
+### 公共字段
+
+### ipv6类（T_ipv6_info）
+
+| 字段          | 概述     | 类型     |
+|:------------|--------|--------|
+| ipv6_id | ipv6主键 | string |
+| region_id  | 地区主键   | string |
+| ipv6        | ipv6编号 | string |
+| is_used | 标记此地址是否被使用，如使用，为具体的mac地址，默认为0 | string |
+|create_time|创建时间| date|
+|update_time|更新时间| date|
 
 
+### 地区类(T_region)
 
+#### 描述：地区详情
+
+| 字段               | 概述   | 类型     |
+|------------------|------|--------|
+| region_id       | 地区主键 | string |
+| region_name     | 地区名字 | string |
+| region_level_id | 地区级别（该地区的级别比如：市，州，县，区，其他） | string |
+|region_number|地区编号| string|
+|create_time|创建时间| date|
+|update_time|更新时间| date|
+
+### 地区级别(T_region_level)
+
+#### 描述：地区级别 供以后前端配置
+
+| 字段               | 概述     | 类型     |
+|------------------|--------|--------|
+| region_level_id | 地区级别主键 | string |
+| region_name     | 地区级别名字 该地区级别的名字比如：市，州，县，区，其他）| string |
+|create_time|创建时间| date|
+|update_time|更新时间| date|
+
+### 网站查询记录表(T_website_info)
+
+| 字段               | 概述     | 类型     |
+|------------------|--------|--------|
+| website_info_id | 网站查询主键 | string |
+| website_Info_address | 网站地址（存网站的域名） | string |
+| ipv6_status | 是否能够使用ipv6，是为1，否为0 | int |
+|is_ipv6 |    是否用了ipv6，已经使用为1，未使用为0    |    boolean   |
+|create_time|创建时间| date|
+|update_time|更新时间| date|
+
+### 用户表(T_user)
+
+| 字段        | 概述           | 类型   |
+| ----------- | -------------- | ------ |
+| user_id     | 用户id         | string |
+| username    | 用户名         | string |
+| password    | 用户密码       | string |
+| region      | 用户所属的地区 | string |
+| create_time | 用户创建时间   | Date   |
+|update_time|更新时间| date|
+
+### 日志记录表（T_log）
+
+| 字段           | 概述             | 类型   |
+| -------------- | ---------------- | ------ |
+| log_id         | 日志id           | string |
+| user_id        | 用户id           | string |
+| user_operation | 用户操作         | string |
+| op_time        | 操作时间         | date   |
+| hint           | 用户操作备注信息 | string |
 
