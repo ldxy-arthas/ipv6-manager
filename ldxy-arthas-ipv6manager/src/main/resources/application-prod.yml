@@ -1,6 +1,5 @@
 spring:
   data:
     mongodb:
-      uri: mongodb://cloud-db-admin:g^h+s3*7-A8nj+L+@59.74.224.24:27018,59.74.224.24:27019/ldxy-cloud-platform?replicaSet=rs0
-      authentication-database: ldxy-cloud-platform
-      database: ldxy-cloud-platform
+      uri: mongodb://112.74.111.23:27017/ipv6_manager
+      database: ipv6_manager
