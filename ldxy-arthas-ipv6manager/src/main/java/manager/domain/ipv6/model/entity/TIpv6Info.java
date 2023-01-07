@@ -16,7 +16,7 @@ public class TIpv6Info {
     private String id;
     private String regionId;
     private String ipv6;
-    private String is_used;
+    private String isUsed;
     private Date createTime;
     private Date update_time;
 }
