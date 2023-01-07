@@ -1,4 +1,4 @@
-package manager.domain.ipv6.model.entity;
+package manager.domain.system.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
@@ -17,13 +17,17 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection  = "t_region_level")
-public class TRegionLevel {
+@Document(collection  = "t_user")
+public class TUser {
 
     @MongoId
     private String id;
 
-    private String regionLevelName;
+    private String username;
+
+    private String password;
+
+    private String region;
 
     @CreatedDate
     @JsonFormat(locale = "zh",  timezone = "Asia/Shanghai", shape = JsonFormat.Shape.STRING)
@@ -32,5 +36,4 @@ public class TRegionLevel {
     @JsonFormat(locale = "zh",  timezone = "Asia/Shanghai", shape = JsonFormat.Shape.STRING)
     @LastModifiedDate
     private Date updateTime;
-
 }

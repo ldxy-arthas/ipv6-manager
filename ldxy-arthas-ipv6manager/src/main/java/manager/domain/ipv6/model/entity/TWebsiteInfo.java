@@ -1,24 +1,40 @@
 package manager.domain.ipv6.model.entity;
 
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
-import java.sql.Date;
+import java.util.Date;
 
 @Data
-@Entity
-@Document(collation = "t_website_info")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Document(collection  = "t_website_info")
 public class TWebsiteInfo {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "_id")
+    @MongoId
     private String id;
+
     private String websiteInfoAddress;
+
     private String ipv6Status;
+
     private String isIpv6;
-    private Date createTime;
+
+    @CreatedDate
+    @JsonFormat(locale = "zh",  timezone = "Asia/Shanghai", shape = JsonFormat.Shape.STRING)
+    private java.util.Date createTime;
+
+    @JsonFormat(locale = "zh",  timezone = "Asia/Shanghai", shape = JsonFormat.Shape.STRING)
+    @LastModifiedDate
     private Date updateTime;
 
 }
