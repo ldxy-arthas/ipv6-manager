@@ -5,10 +5,12 @@ import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.sql.Date;
+
 @Data
 @Entity
 @Document(collation = "t_log")
 public class TLog {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "_id")
