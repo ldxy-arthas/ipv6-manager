@@ -10,6 +10,7 @@ import java.sql.Date;
 @Entity
 @Document(collation = "t_ipv6_info")
 public class TIpv6Info {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "_id")
