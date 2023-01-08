@@ -2,18 +2,23 @@ package manager.infrastructure.cache;
 
 import cn.hutool.core.util.ObjectUtil;
 import manager.domain.system.model.entity.TUser;
-
-import java.util.Map;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 用户缓存
  * k:token
- * v:value
+ * v:用户
  */
-public class LoginUserCache {
-    private static final Map<String, TUser> cache = new ConcurrentHashMap<>(8);
+@Configuration
+@EnableScheduling
+public  class  LoginUserCache {
+    private final static ConcurrentHashMap<String, TUser> cache ;
 
+    static {
+            cache =  new ConcurrentHashMap<>(8);
+    }
     public static void set(String k, TUser v){
         if (ObjectUtil.isNull(v)){
             throw new RuntimeException("值为空");
