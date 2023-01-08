@@ -10,6 +10,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
@@ -17,15 +19,30 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Document(collection  = "t_region")
-public class TRegion {
+public class TRegion implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * 主键id
+     */
     @MongoId
     private String id;
 
+    /**
+     * 地区名
+     */
     private String regionName;
 
+    /**
+     * 地区级别id
+     */
     private String regionLevelId;
 
+    /**
+     * 地区编号
+     */
     private String regionNumber;
 
     @CreatedDate

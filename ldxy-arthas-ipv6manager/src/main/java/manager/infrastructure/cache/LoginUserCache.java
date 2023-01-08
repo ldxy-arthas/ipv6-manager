@@ -1,9 +1,8 @@
 package manager.infrastructure.cache;
 
-import com.xiaoleilu.hutool.util.ObjectUtil;
+import cn.hutool.core.util.ObjectUtil;
 import manager.domain.system.model.entity.TUser;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 

@@ -11,6 +11,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
@@ -18,12 +20,30 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Document(collection  = "t_ipv6_info")
-public class TIpv6Info {
+public class TIpv6Info implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * id主键
+     */
     @MongoId
     private String  id;
+
+    /**
+     * 地区id
+     */
     private String regionId;
+
+    /**
+     * ipv6
+     */
     private String ipv6;
+
+    /**
+     * ipv6是否被使用，是为1，否为0
+     */
     private String isUsed;
 
     @CreatedDate

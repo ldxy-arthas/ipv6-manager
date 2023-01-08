@@ -9,6 +9,7 @@ import manager.domain.system.service.auth.AuthenticationService;
 import manager.infrastructure.Enum.Role;
 import manager.infrastructure.dao.UserDao;
 import manager.infrastructure.utils.JwtService;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,17 +33,22 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final AuthenticationManager authenticationManager;
 
+    private final RedisTemplate<String, TUser> redisTemplate;
+
     public AuthenticationResponseVO register(RegisterRequestDTO request) {
 
         var user = TUser.builder()
                 .username(request.getName())
                 .password(passwordEncoder.encode(request.getPassword()))
+                .region(request.getRegion())
                 .role(Role.USER)
                 .build();
 
         repository.save(user);
 
         var jwtToken = jwtService.generateToken(user);
+
+        redisTemplate.opsForValue().set(jwtToken, user);
 
         return AuthenticationResponseVO.builder()
                 .token(jwtToken)
@@ -60,6 +66,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .orElseThrow();
 
         var jwtToken = jwtService.generateToken(user);
+
+        redisTemplate.opsForValue().set(jwtToken, user);
 
         return AuthenticationResponseVO.builder()
                 .token(jwtToken)

@@ -17,7 +17,7 @@ spring:
     active: dev
 
   mvc:
-    pathmatch:
+    path match:
       matching-strategy: ANT_PATH_MATCHER
   main:
     allow-bean-definition-overriding: true

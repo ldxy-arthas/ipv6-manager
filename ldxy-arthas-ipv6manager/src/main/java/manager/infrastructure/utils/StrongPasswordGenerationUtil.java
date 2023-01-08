@@ -10,7 +10,9 @@ import java.util.Random;
 
 public class StrongPasswordGenerationUtil {
 
-    // private static final char[] Symbol = {'`', '!', '"', '?' ,'$' , '?' , '%' , '^' ,'&' , '*' , '(' ,')', '_', '-', '+', '=', '{', '[', '}', ']' , ':' , ';' , '@' ,'\\', '~' , '#' , '|' ,'<', ',' ,'>' ,'.' ,'?' ,'/'};
+    private StrongPasswordGenerationUtil() {
+    }
+
     private static final char[] Number = {'1','2','3','4','5','6','7','8','9','0'};
     private static final char[] Lowercase = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
     private static final char[] Capitalization = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};

@@ -11,6 +11,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
@@ -18,15 +20,30 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Document(collection  = "t_website_info")
-public class TWebsiteInfo {
+public class TWebsiteInfo implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * 主键id
+     */
     @MongoId
     private String id;
 
+    /**
+     * 网站域名
+     */
     private String websiteInfoAddress;
 
+    /**
+     * 是否支持ipv6
+     */
     private String ipv6Status;
 
+    /**
+     * 是否已使用ipv6
+     */
     private String isIpv6;
 
     @CreatedDate

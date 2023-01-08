@@ -16,6 +16,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -25,15 +27,30 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Document(collection  = "t_user")
-public class TUser implements UserDetails {
+public class TUser implements UserDetails, Serializable {
 
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * 用户id
+     */
     @MongoId
     private String id;
 
+    /**
+     * 用户名
+     */
     private String username;
 
+    /**
+     * 用户密码
+     */
     private String password;
 
+    /**
+     * 用户地区
+     */
     private String region;
 
     @CreatedDate
