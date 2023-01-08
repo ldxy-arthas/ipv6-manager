@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * v:value
  */
 public class LoginUserCache {
-    private static final Map<String, TUser> cache = new ConcurrentHashMap<>();
+    private static final Map<String, TUser> cache = new ConcurrentHashMap<>(8);
 
     public static void set(String k, TUser v){
         if (ObjectUtil.isNull(v)){
