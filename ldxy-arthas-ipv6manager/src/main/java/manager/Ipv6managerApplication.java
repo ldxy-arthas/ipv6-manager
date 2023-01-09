@@ -9,12 +9,14 @@ import org.springframework.data.mongodb.config.EnableMongoAuditing;
 
 
 @Slf4j
-@EnableMongoAuditing//自动注入时间
+@EnableMongoAuditing
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class,  JpaRepositoriesAutoConfiguration.class })
 public class Ipv6managerApplication {
 
     public static void main(String[] args) {
+
         SpringApplication.run(Ipv6managerApplication.class, args);
+        log.info("ipv6 后台管理系统启动……");
     }
 
 }

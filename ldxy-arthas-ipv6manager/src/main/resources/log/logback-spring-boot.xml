@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--please pay attention that: file name should not be logback.xml，name it logback-spring.xml to use it in springboot framework-->
+<configuration>
+    <!-- 配置文件中配置日志路径以及日志等级 -->
+    <springProperty scope="context" name="logging.profile" source="spring.profiles.active"/>
+    <springProperty scope="context" name="logging.path" source="logging.path"/>
+    <springProperty scope="context" name="logging.level" source="logging.level"/>
+    <springProperty scope="context" name="logging.name" source="spring.application.name"/>
+    <!-- 日志的格式 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{80} - %msg%n</Pattern>
+        </encoder>
+    </appender>
+    <!-- 错误日志的打印方式 -->
+    <appender name="ERROR-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <append>true</append>
+        <!-- 限制到error级别-->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>error</level>
+        </filter>
+        <file>${logging.path}/${logging.name}-error-${logging.profile}.log}</file>
+        <!-- 错误日志的命名 -->
+        <!-- 错误日志的保存时间以及按日期的命名格式 -->
+        <!--        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 错误日志按日期命名格式-->
+            <FileNamePattern>
+                ${logging.path}/${logging.name}-error.%d{yyyy-MM-dd}.%i.log
+            </FileNamePattern>
+            <!-- 保存时间 -->
+            <maxFileSize>100MB</maxFileSize>
+            <maxHistory>10</maxHistory>
+            <!--每个文件最多10MB，保留7天的历史记录，但最多500MB-->
+            <totalSizeCap>500MB</totalSizeCap>
+            <!--重启清理日志文件-->
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!-- 错误日志的格式 -->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+            <!-- 编码 -->
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+    <!-- 生成html格式日志开始 -->
+    <appender name="HTML-APPENDER" class="ch.qos.logback.core.FileAppender">
+        <!-- 过滤器，只记录error级别的日志 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>error</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder
+                class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="ch.qos.logback.classic.html.HTMLLayout">
+                <pattern>%p%d%msg%M%F{32}%L</pattern>
+            </layout>
+            <!-- encoding -->
+            <charset>UTF-8</charset>
+        </encoder>
+        <file>${logging.path}/${logging.name}-error-log.html</file>
+    </appender>
+    <appender name="COMMON-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <append>true</append>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>${logging.level}</level>
+        </filter>
+        <file>${logging.path}/${logging.name}-${logging.profile}.log}</file>
+        <!-- to generate a log file everyday with a longest lasting of 30 days -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- logfile name with daily rolling-->
+            <FileNamePattern>
+                ${logging.path}/${logging.name}-${logging.profile}.%d{yyyy-MM-dd}.%i.log
+            </FileNamePattern>
+            <maxFileSize>100MB</maxFileSize>
+            <maxHistory>5</maxHistory>
+            <totalSizeCap>100MB</totalSizeCap>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!--output format：%d is for date，%thread is for thread name，%-5level：loglevel with 5 character  %msg：log message，%n line breaker-->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+            <!-- encoding -->
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!--记录所有日志-->
+    <appender name="FILE_ALL" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logging.path}/${logging.name}-all.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <FileNamePattern>
+                ${logging.path}/${logging.name}-all.%d{yyyy-MM-dd}.%i.zip
+            </FileNamePattern>
+            <maxFileSize>10MB</maxFileSize>
+            <maxHistory>7</maxHistory>
+            <totalSizeCap>500MB</totalSizeCap>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} -%5p ${PID:-} [%15.15t] %-40.40logger{39} : %m%n</pattern>
+        </encoder>
+        <append>false</append>
+    </appender>
+    <springProfile name="dev">
+        <!--开发环境 只需要打印到窗口以及错误日志即可 -->
+        <logger name="com.apache.ibatis" level="DEBUG"/>
+        <logger name="java.sql.Connection" level="DEBUG"/>
+        <logger name="java.sql.Statement" level="DEBUG"/>
+        <logger name="java.sql.PreparedStatement" level="DEBUG"/>
+        <logger name="org.springframework" level="error"/>
+        <!--自己的项目路径-->
+        <logger name="manager" level="${logging.level}" additivity="false">
+            <appender-ref ref="STDOUT"/>
+            <appender-ref ref="ERROR-APPENDER"/>
+        </logger>
+        <root level="${logging.level}">
+            <appender-ref ref="STDOUT"/>
+            <appender-ref ref="ERROR-APPENDER"/>
+            <appender-ref ref="FILE_ALL"/>
+        </root>
+    </springProfile>
+    <springProfile name="test">
+        <!--测试环境 只需要打印到日志文件以及错误日志即可 -->
+        <logger name="com.apache.ibatis" level="INFO"/>
+        <logger name="java.sql.Connection" level="INFO"/>
+        <logger name="java.sql.Statement" level="INFO"/>
+        <logger name="java.sql.PreparedStatement" level="DEBUG"/>
+        <!--自己的项目路径-->
+        <logger name="manager" level="${logging.level}" additivity="false">
+            <appender-ref ref="COMMON-APPENDER"/>
+            <appender-ref ref="ERROR-APPENDER"/>
+            <appender-ref ref="FILE_ALL"/>
+        </logger>
+
+        <root level="${logging.level}">
+            <appender-ref ref="COMMON-APPENDER"/>
+            <appender-ref ref="ERROR-APPENDER"/>
+        </root>
+    </springProfile>
+    <springProfile name="prod">
+        <!--生产环境 只需要打印到日志文件以及错误日志，保留错误日志html -->
+        <logger name="com.apache.ibatis" level="WARN"/>
+        <logger name="java.sql.Connection" level="WARN"/>
+        <logger name="java.sql.Statement" level="WARN"/>
+        <logger name="java.sql.PreparedStatement" level="WARN"/>
+        <!--自己的项目路径-->
+        <logger name="manager" level="${logging.level}" additivity="false">
+            <appender-ref ref="COMMON-APPENDER"/>
+            <appender-ref ref="ERROR-APPENDER"/>
+        </logger>
+        <root level="${logging.level}">
+            <appender-ref ref="COMMON-APPENDER"/>
+            <appender-ref ref="HTML-APPENDER"/>
+            <appender-ref ref="ERROR-APPENDER"/>
+        </root>
+    </springProfile>
+</configuration>

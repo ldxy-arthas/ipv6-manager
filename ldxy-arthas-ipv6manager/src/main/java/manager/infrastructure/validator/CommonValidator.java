@@ -6,7 +6,7 @@ package manager.infrastructure.validator;
  * @Description: TODO
  */
 
-import com.xiaoleilu.hutool.util.StrUtil;
+import cn.hutool.core.util.StrUtil;
 import manager.infrastructure.common.Exception.StatusFailException;
 import org.springframework.stereotype.Component;
 

@@ -36,7 +36,8 @@ public enum BusinessType
      * 分配ipv6
      */
     ASSIGNIPv6("分配ipv6"),
-    ;
+
+    LOGIN("用户登录");
 
     private String des;
 
