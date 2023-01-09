@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import manager.domain.system.model.entity.TLog;
+
+import java.util.List;
 
 /**
  * @Author: yuluo
@@ -18,5 +21,7 @@ import lombok.NoArgsConstructor;
 public class LogOperationResponseVO {
 
     private Boolean flag;
+
+    private List<TLog> logList;
 
 }

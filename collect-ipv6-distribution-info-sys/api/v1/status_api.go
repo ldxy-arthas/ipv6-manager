@@ -16,7 +16,6 @@ func SysStatus(c *gin.Context) {
 		res := sysStatusService.CheckSysStatus()
 		c.JSON(200, res)
 	} else {
-		// 加入日志处理
 		log.LogrusObj.Infof("System status err: %s", err)
 		c.JSON(http.StatusBadRequest, serializer.ErrorResponse(err))
 	}

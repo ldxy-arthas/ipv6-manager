@@ -3,6 +3,7 @@ package service
 import (
 	"collect-ipv6-distribution-info-sys/model"
 	"collect-ipv6-distribution-info-sys/pkg/e"
+	"collect-ipv6-distribution-info-sys/repository"
 	"collect-ipv6-distribution-info-sys/serializer"
 )
 
@@ -15,8 +16,8 @@ func (sys SysService) CheckSysStatus() serializer.Response {
 	code := e.Success
 
 	// check db status
-	// TODO:check db status;
-	if false {
+	err := repository.CheckDbConnection()
+	if err != nil {
 		code = e.DbStatusError
 		return serializer.Response{
 			Status: code,

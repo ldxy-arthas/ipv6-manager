@@ -14,7 +14,7 @@ const (
 	SysStatusError = 2000
 
 	// ipv6错误
-	CollectionIpv6Error     = 3000
-	SendIpv6FailedError     = 4000
-	SaveIpv6CollectionError = 5000
+	CollectionIpv6StatusError = 3000
+	SendIpv6FailedError       = 4000
+	SaveIpv6CollectionError   = 5000
 )

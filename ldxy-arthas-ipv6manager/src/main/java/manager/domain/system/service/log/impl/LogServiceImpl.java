@@ -10,6 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @Author: yuluo
  * @CreateTime: 2022-10-01  17:52
@@ -82,6 +84,16 @@ public class LogServiceImpl implements LogService {
 
         return LogOperationResponseVO.builder()
                 .flag(true)
+                .build();
+    }
+
+    @Override
+    public LogOperationResponseVO getLogs() {
+
+        List<TLog> all = this.system.getLogDao().findAll();
+
+        return LogOperationResponseVO.builder()
+                .logList(all)
                 .build();
     }
 }

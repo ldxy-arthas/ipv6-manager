@@ -18,4 +18,6 @@ public interface LogService {
     void saveLog(TLog operaLog);
 
     LogOperationResponseVO deleteDBLog();
+
+    LogOperationResponseVO getLogs();
 }
