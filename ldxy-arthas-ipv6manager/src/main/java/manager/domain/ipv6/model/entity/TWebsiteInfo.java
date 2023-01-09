@@ -42,9 +42,9 @@ public class TWebsiteInfo implements Serializable {
     private String ipv6Status;
 
     /**
-     * 是否已使用ipv6
+     * 网站的ipv6地址
      */
-    private String isIpv6;
+    private String ipv6Address;
 
     @CreatedDate
     @JsonFormat(locale = "zh",  timezone = "Asia/Shanghai", shape = JsonFormat.Shape.STRING)

@@ -5,8 +5,7 @@ package manager.infrastructure.validator;
  * @CreateTime: 2023-01-07  20:23
  * @Description: TODO
  */
-
-import com.xiaoleilu.hutool.util.StrUtil;
+import cn.hutool.core.util.StrUtil;
 import manager.infrastructure.common.Exception.StatusFailException;
 import org.springframework.stereotype.Component;
 

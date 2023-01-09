@@ -3,6 +3,7 @@ package manager.repository.impl;
 import jakarta.annotation.Resource;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import manager.domain.ipv6.model.entity.TWebsiteInfo;
 import manager.infrastructure.dao.Ipv6InfoDao;
 import manager.infrastructure.dao.RegionDao;
 import manager.infrastructure.dao.RegionLevelDao;
