@@ -2,7 +2,7 @@ package manager.interfaces.management;
 
 import jakarta.annotation.Resource;
 import lombok.RequiredArgsConstructor;
-import manager.application.Ipv6Service;
+import manager.application.WebSiteExamineService;
 import manager.infrastructure.common.Result;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class Ipv6ManagerController {
 
     @Resource
-    Ipv6Service ipv6Service;
+    WebSiteExamineService ipv6Service;
 
     @RequestMapping("/checkWebSiteAddress/{webSiteAddress}")
     public Result<Object> checkWebSiteAddress(@PathVariable String webSiteAddress){

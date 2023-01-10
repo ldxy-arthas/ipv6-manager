@@ -38,9 +38,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final UserValidator userValidator;
 
-    public AuthenticationResponseVO register(RegisterRequestDTO request) {
+    public AuthenticationResponseVO register(RegisterRequestDTO request) throws StatusFailException {
 
         // TODO：我觉得应该在application处理异常 service要抛出去这个异常
+
         userValidator.validateUser((TUser.builder()
                 .username(request.getName())
                 .password(request.getPassword())

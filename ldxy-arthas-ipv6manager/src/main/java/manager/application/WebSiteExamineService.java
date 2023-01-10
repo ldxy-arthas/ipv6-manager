@@ -2,6 +2,7 @@ package manager.application;
 
 import manager.infrastructure.common.Result;
 
-public interface Ipv6Service {
+public interface WebSiteExamineService {
+    //检查
     public Result<Object> checkwebSiteAddress(String webSiteAddress);
 }

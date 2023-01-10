@@ -6,23 +6,18 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class WebSiteExamine extends DefaultExamine{
-    public String checkWebSite(String webSiteUrl){
-        String result = "0";
+
+    public TWebsiteInfo checkWebSite(String webSiteUrl){
         //检查网站是否是ipv6
         String res = super.WebSiteSupportIpv6(webSiteUrl);
         if (res.equals("0")){
-            result = "0";
+            return null;
         }
-        if (!res.equals("0")){
-            TWebsiteInfo websiteInfo = TWebsiteInfo.builder()
-                    .ipv6Address(res)
-                    .websiteInfoAddress(webSiteUrl)
-                    .ipv6Status("1").build();
-            if (ObjectUtil.isNull(ipv6Repository.getWebsiteInfoDao().findByWebsiteInfoAddress(webSiteUrl))){
-                ipv6Repository.getWebsiteInfoDao().save(websiteInfo);
-            }
-            result="1";
-        }
-        return result;
+        //反查一下数据库，获取id
+        TWebsiteInfo websiteInfo = ipv6Repository.getWebsiteInfoDao().findByWebsiteInfoAddress(webSiteUrl);
+        websiteInfo.setIpv6Address(res);
+        websiteInfo.setWebsiteInfoAddress(webSiteUrl);
+        websiteInfo.setIpv6Status("1");
+        return websiteInfo;
     }
 }
