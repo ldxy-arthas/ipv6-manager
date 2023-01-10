@@ -14,12 +14,13 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{ipv6managerHost}}:{{ipv6managerPort}}/user/login",
+							"raw": "{{ipv6managerHost}}:{{ipv6managerPort}}/api/user/login",
 							"host": [
 								"{{ipv6managerHost}}"
 							],
 							"port": "{{ipv6managerPort}}",
 							"path": [
+								"api",
 								"user",
 								"login"
 							]
@@ -52,12 +53,13 @@
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "{{ipv6managerHost}}:{{ipv6managerPort}}/user",
+							"raw": "{{ipv6managerHost}}:{{ipv6managerPort}}/api/user",
 							"host": [
 								"{{ipv6managerHost}}"
 							],
 							"port": "{{ipv6managerPort}}",
 							"path": [
+								"api",
 								"user"
 							]
 						}
@@ -65,18 +67,40 @@
 					"response": []
 				},
 				{
-					"name": "验证码获取",
+					"name": "超级管理员创建普通用户",
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{ipv6managerHost}}:{{ipv6managerPort}}/code",
+							"raw": "{{ipv6managerHost}}:{{ipv6managerPort}}/api/user/create_user",
 							"host": [
 								"{{ipv6managerHost}}"
 							],
 							"port": "{{ipv6managerPort}}",
 							"path": [
-								"code"
+								"api",
+								"user",
+								"create_user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "获取登录验证码",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ipv6managerHost}}:{{ipv6managerPort}}/api/code/",
+							"host": [
+								"{{ipv6managerHost}}"
+							],
+							"port": "{{ipv6managerPort}}",
+							"path": [
+								"api",
+								"code",
+								""
 							]
 						}
 					},
@@ -85,11 +109,52 @@
 			]
 		},
 		{
-			"name": "ipv6信息拉取",
-			"item": []
+			"name": "ipv6信息收集模块",
+			"item": [
+				{
+					"name": "服务测试",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{collectionIpv6Host}}:{{collectionIpv6Port}}/api/v1/checkStatus",
+							"host": [
+								"{{collectionIpv6Host}}"
+							],
+							"port": "{{collectionIpv6Port}}",
+							"path": [
+								"api",
+								"v1",
+								"checkStatus"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "主动收集ipv6信息",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{collectionIpv6Host}}:{{collectionIpv6Port}}/api/v1/ipv6",
+							"host": [
+								"{{collectionIpv6Host}}"
+							],
+							"port": "{{collectionIpv6Port}}",
+							"path": [
+								"api",
+								"v1",
+								"ipv6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		},
 		{
-			"name": "业务模块",
+			"name": "ipv6模块",
 			"item": [
 				{
 					"name": "检查是否支持ipv6",
@@ -97,12 +162,14 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{ipv6managerHost}}:{{ipv6managerPort}}/checK_ipv6",
+							"raw": "{{ipv6managerHost}}:{{ipv6managerPort}}/api//checK_ipv6",
 							"host": [
 								"{{ipv6managerHost}}"
 							],
 							"port": "{{ipv6managerPort}}",
 							"path": [
+								"api",
+								"",
 								"checK_ipv6"
 							]
 						}
@@ -115,12 +182,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{ipv6managerHost}}:{{ipv6managerPort}}/ipv6info",
+							"raw": "{{ipv6managerHost}}:{{ipv6managerPort}}/api//ipv6info",
 							"host": [
 								"{{ipv6managerHost}}"
 							],
 							"port": "{{ipv6managerPort}}",
 							"path": [
+								"api",
+								"",
 								"ipv6info"
 							]
 						}
@@ -133,12 +202,14 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{ipv6managerHost}}:{{ipv6managerPort}}/set_ipv6",
+							"raw": "{{ipv6managerHost}}:{{ipv6managerPort}}/api//set_ipv6",
 							"host": [
 								"{{ipv6managerHost}}"
 							],
 							"port": "{{ipv6managerPort}}",
 							"path": [
+								"api",
+								"",
 								"set_ipv6"
 							]
 						}
@@ -151,13 +222,78 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{ipv6managerHost}}:{{ipv6managerPort}}/random_ipv6",
+							"raw": "{{ipv6managerHost}}:{{ipv6managerPort}}/api/random_ipv6",
 							"host": [
 								"{{ipv6managerHost}}"
 							],
 							"port": "{{ipv6managerPort}}",
 							"path": [
+								"api",
 								"random_ipv6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "日志模块",
+			"item": [
+				{
+					"name": "删除数据库中的日志",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ipv6managerHost}}:{{ipv6managerPort}}/api/log/",
+							"host": [
+								"{{ipv6managerHost}}"
+							],
+							"port": "{{ipv6managerPort}}",
+							"path": [
+								"api",
+								"log",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "查看用户操作日志",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ipv6managerHost}}:{{collectionIpv6Port}}/api/log/",
+							"host": [
+								"{{ipv6managerHost}}"
+							],
+							"port": "{{collectionIpv6Port}}",
+							"path": [
+								"api",
+								"log",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "查看ipv6信息收集日志",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ipv6managerHost}}:{{ipv6managerPort}}/api/ipv6collectionlog",
+							"host": [
+								"{{ipv6managerHost}}"
+							],
+							"port": "{{ipv6managerPort}}",
+							"path": [
+								"api",
+								"ipv6collectionlog"
 							]
 						}
 					},
