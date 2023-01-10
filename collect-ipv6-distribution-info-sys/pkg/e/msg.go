@@ -12,9 +12,9 @@ var MsgFlags = map[int]string{
 	SysStatusError: "系统运行异常",
 
 	// ipv6错误
-	CollectionIpv6Error:     "收集Ipv6信息异常",
-	SendIpv6FailedError:     "发送Ipv6信息异常",
-	SaveIpv6CollectionError: "保存ipv6收集信息异常",
+	CollectionIpv6StatusError: "收集Ipv6信息异常",
+	SendIpv6FailedError:       "发送Ipv6信息异常",
+	SaveIpv6CollectionError:   "保存ipv6收集信息异常",
 }
 
 // GetMsg 获取状态码对应的信息

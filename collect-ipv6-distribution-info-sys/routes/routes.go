@@ -18,7 +18,7 @@ func NewRouter() *gin.Engine {
 		})
 		// api接口操作
 		v1.GET("sys/checkSys", api.SysStatus)
-		// v1.GET("ipv6/collection", api.CollectionInfo)
+		v1.GET("ipv6/collection", api.RunIpv6CollectionCmd)
 
 	}
 

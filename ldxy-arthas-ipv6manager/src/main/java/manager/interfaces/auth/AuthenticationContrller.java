@@ -5,6 +5,8 @@ import manager.domain.system.model.dto.AuthenticationRequestDTO;
 import manager.domain.system.model.dto.RegisterRequestDTO;
 import manager.domain.system.model.vo.AuthenticationResponseVO;
 import manager.domain.system.service.auth.AuthenticationService;
+import manager.infrastructure.Enum.BusinessType;
+import manager.infrastructure.annotation.Log;
 import manager.infrastructure.common.Result;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +27,7 @@ public class AuthenticationContrller {
     private final AuthenticationService service;
 
     @PostMapping("/register")
+    @Log(title = "用户注册", businessType = BusinessType.OTHER)
     public Result<AuthenticationResponseVO> register(
         @RequestBody RegisterRequestDTO request
     ){
@@ -32,6 +35,7 @@ public class AuthenticationContrller {
     }
 
     @PostMapping("/authenticate")
+    @Log(title = "用户登录", businessType = BusinessType.LOGIN)
     public Result<AuthenticationResponseVO> authenticate(
             @RequestBody AuthenticationRequestDTO request
     ){

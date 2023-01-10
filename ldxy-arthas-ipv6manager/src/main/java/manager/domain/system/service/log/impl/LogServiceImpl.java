@@ -1,12 +1,16 @@
 package manager.domain.system.service.log.impl;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.RequiredArgsConstructor;
+import manager.domain.system.model.entity.TLog;
+import manager.domain.system.model.vo.LogOperationResponseVO;
 import manager.domain.system.service.log.LogService;
 import manager.infrastructure.Enum.BusinessType;
-import org.springframework.beans.factory.annotation.Value;
+import manager.repository.impl.SystemRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.io.*;
+import java.util.List;
 
 /**
  * @Author: yuluo
@@ -14,22 +18,24 @@ import java.io.*;
  * @Description: TODO
  */
 
-@Slf4j
 @Service
+@RequiredArgsConstructor
 public class LogServiceImpl implements LogService {
+
+    private final Logger logger = LoggerFactory.getLogger(LogServiceImpl.class);
+
+    private final SystemRepository system;
 
     /**
      * 对日志进行持久化操作
      *
-     * @param operLog 日志对象
+     * @param operaLog 日志对象
      */
-    public void saveLog(SysLog operLog) {
+    public void saveLog(TLog operaLog) {
 
         String businessTypeDes;
 
-        System.out.println(operLog.getBusinessType());
-
-        switch (operLog.getBusinessType()) {
+        switch (operaLog.getBusinessType()) {
             case 0: {
                 businessTypeDes = BusinessType.OTHER.getDes();
                 break;
@@ -51,49 +57,43 @@ public class LogServiceImpl implements LogService {
                 break;
             }
             case 5: {
-                businessTypeDes = BusinessType.GRANT.getDes();
+                businessTypeDes = BusinessType.ASSIGNIPv6.getDes();
                 break;
             }
             case 6: {
-                businessTypeDes = BusinessType.EXPORT.getDes();
-                break;
-            }
-            case 7: {
-                businessTypeDes = BusinessType.IMPORT.getDes();
-                break;
-            }
-            case 8: {
-                businessTypeDes = BusinessType.FORCE.getDes();
+                businessTypeDes = BusinessType.LOGIN.getDes();
                 break;
             }
             default: {
                 businessTypeDes = "处理失败！";
             }
         }
-        operLog.setBusinessTypeDes(businessTypeDes);
+        operaLog.setBusinessTypeDes(businessTypeDes);
 
-        // 保存到数据库中
-        this.save(operLog);
+        // 保存用户日志操作到数据库中
+        this.system.getLogDao().save(operaLog);
 
     }
 
     /**
-     * 删除日志文件
+     * 删除数据库用户操作日志
      */
-    public boolean deleteLogFile() {
+    public LogOperationResponseVO deleteDBLog() {
 
-        boolean flag = false;
+        this.system.getLogDao().deleteAll();
 
-        File sysLogFile = new File(sysRunLogName);
-        boolean delete = sysLogFile.delete();
+        return LogOperationResponseVO.builder()
+                .flag(true)
+                .build();
+    }
 
-        File userLogFile = new File(path + logName);
-        boolean delete1 = userLogFile.delete();
+    @Override
+    public LogOperationResponseVO getLogs() {
 
-        if (delete && delete1) {
-            flag = true;
-        }
+        List<TLog> all = this.system.getLogDao().findAll();
 
-        return flag;
+        return LogOperationResponseVO.builder()
+                .logList(all)
+                .build();
     }
 }

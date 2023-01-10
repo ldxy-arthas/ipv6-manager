@@ -5,9 +5,7 @@ import manager.domain.system.service.log.LogService;
 import manager.infrastructure.Enum.BusinessType;
 import manager.infrastructure.annotation.Log;
 import manager.infrastructure.common.Result;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Author: yuluo
@@ -22,7 +20,14 @@ public class logController {
 
     private final LogService logService;
 
-    @GetMapping("/delete")
+    @GetMapping("/")
+    public Result<?> getLogs() {
+
+        return Result.success(logService.getLogs());
+    }
+
+
+    @DeleteMapping("/")
     @Log(title = "删除数据库日志", businessType = BusinessType.DELETE)
     public Result<?> deleteDBLog() {
 

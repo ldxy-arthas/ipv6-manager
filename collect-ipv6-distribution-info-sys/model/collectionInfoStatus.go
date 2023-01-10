@@ -1,12 +1,9 @@
 package model
 
-import "gorm.io/gorm"
-
 type CollectionInfoStatus struct {
-	gorm.Model
-	Id             string `gorm:"not null"`
-	collectionTime string
+	Id             string
+	CollectionTime string
 	Status         string
 	CollectionIp   string
-	SendStatus     string
+	Content        string
 }

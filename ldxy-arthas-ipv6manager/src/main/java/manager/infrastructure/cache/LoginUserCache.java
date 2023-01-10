@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @Configuration
 @EnableScheduling
-public  class  LoginUserCache {
+public class LoginUserCache {
     private final static ConcurrentHashMap<String, TUser> cache ;
 
     static {

@@ -25,7 +25,7 @@ import java.util.Objects;
  */
 
 @Component
-@RequiredArgsConstructor // 使用getter和setter注入，不用Autowired， 省略getter和setter方法
+@RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;

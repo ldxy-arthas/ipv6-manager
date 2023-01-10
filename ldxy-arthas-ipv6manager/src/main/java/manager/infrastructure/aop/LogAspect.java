@@ -10,11 +10,11 @@ import manager.domain.system.model.entity.TLog;
 import manager.domain.system.model.entity.TUser;
 import manager.domain.system.service.log.LogService;
 import manager.infrastructure.annotation.Log;
+import manager.infrastructure.cache.LoginUserCache;
 import manager.infrastructure.utils.AspectjUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
@@ -39,12 +39,10 @@ public class LogAspect {
 
     private final LogService operaLogService;
 
-    private final RedisTemplate<String, TUser> redisTemplate;
-
     /**
      * 处理完请求后执行
      *
-     * @param joinPoint 切点
+     * @param joinPoint 切入点
      */
     @AfterReturning(pointcut = "@annotation(controllerLog)", returning = "jsonResult")
     public void doAfterReturning(JoinPoint joinPoint, Log controllerLog, Object jsonResult) {
@@ -57,7 +55,7 @@ public class LogAspect {
            // 获取当前的用户
             HttpServletRequest request = AspectjUtils.getRequest();
             String token = request.getHeader("Authorization").substring(7);
-            TUser curUser = redisTemplate.opsForValue().get(token);
+            TUser curUser = LoginUserCache.get(token);
             log.info("用户：{}", curUser);
 
             // 日志记录
@@ -92,7 +90,6 @@ public class LogAspect {
             operaLogService.saveLog(operaLog);
 
         } catch (Exception exp) {
-            log.error("异常信息:{}", exp.getMessage());
             exp.printStackTrace();
         }
     }

@@ -25,6 +25,8 @@ public class TestLog {
     @Test
     void testDeleteSysLog() throws IOException {
 
+        LogOperationResponseVO logOperationResponseVO = logService.deleteSysLogFile();
+        Assert.isTrue(logOperationResponseVO.getFlag(), "删除系统运行日志失败！");
     }
 
 }

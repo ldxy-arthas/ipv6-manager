@@ -3,6 +3,7 @@ package manager.domain.system.service.auth;
 import manager.domain.system.model.dto.AuthenticationRequestDTO;
 import manager.domain.system.model.dto.RegisterRequestDTO;
 import manager.domain.system.model.vo.AuthenticationResponseVO;
+import manager.infrastructure.common.Exception.StatusFailException;
 
 /**
  * @Author: yuluo
@@ -12,7 +13,7 @@ import manager.domain.system.model.vo.AuthenticationResponseVO;
 
 public interface AuthenticationService {
 
-    AuthenticationResponseVO register(RegisterRequestDTO request);
+    AuthenticationResponseVO register(RegisterRequestDTO request) throws StatusFailException;
 
     AuthenticationResponseVO authenticate(AuthenticationRequestDTO request);
 

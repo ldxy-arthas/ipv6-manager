@@ -4,10 +4,12 @@ server:
 logging:
   file:
     name: logs/ipv6manager.log
+  config: classpath:log/logback-spring-boot.xml
   level:
     root: info
   pattern:
     dateformat: yyyy-MM-dd HH:mm:ss.SSS,GMT+8
+    file: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID}){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%wEx"
 
 spring:
   application:

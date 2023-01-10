@@ -19,6 +19,8 @@ var (
 	DbUser     string
 	DbPassword string
 	DbName     string
+
+	Command string
 )
 
 // Init 初始化配置
@@ -34,6 +36,7 @@ func Init() {
 	//读取配置
 	LoadServer(file)
 	LoadMongodb(file)
+	LoadSystemShell(file)
 }
 
 // LoadMongodb 加载数据库配置信息
@@ -51,4 +54,9 @@ func LoadServer(file *ini.File) {
 	AppModel = file.Section("service").Key("AppMode").String()
 	HttpPort = file.Section("service").Key("HttpPort").String()
 	Host = file.Section("service").Key("Host").String()
+}
+
+// LoadSystemShell 加载shell配置信息
+func LoadSystemShell(file *ini.File) {
+	Command = file.Section("system").Key("Command").String()
 }
