@@ -13,7 +13,7 @@ spring:
 
     redis:
       database: 6
-      host: 127.0.0.1
+      host: 112.74.111.23
       password: '082916'
       lettuce:
         pool:
