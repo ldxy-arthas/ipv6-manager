@@ -1,12 +1,10 @@
 package manager.interfaces.auth;
 
 import lombok.RequiredArgsConstructor;
+import manager.application.SystemServiceManager;
 import manager.domain.system.model.dto.AuthenticationRequestDTO;
 import manager.domain.system.model.dto.RegisterRequestDTO;
 import manager.domain.system.model.vo.AuthenticationResponseVO;
-import manager.domain.system.service.auth.AuthenticationService;
-import manager.infrastructure.Enum.BusinessType;
-import manager.infrastructure.annotation.Log;
 import manager.infrastructure.common.Result;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,22 +22,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthenticationContrller {
 
-    private final AuthenticationService service;
+    private final SystemServiceManager systemServiceManager;
 
     @PostMapping("/register")
-    @Log(title = "用户注册", businessType = BusinessType.OTHER)
     public Result<AuthenticationResponseVO> register(
         @RequestBody RegisterRequestDTO request
     ){
-        return Result.success(service.register(request));
+        return (systemServiceManager.register(request));
     }
 
-    @PostMapping("/authenticate")
-    @Log(title = "用户登录", businessType = BusinessType.LOGIN)
+    @PostMapping("/login")
     public Result<AuthenticationResponseVO> authenticate(
             @RequestBody AuthenticationRequestDTO request
     ){
-        return Result.success(service.authenticate(request));
+        return (systemServiceManager.login(request));
     }
 
 }

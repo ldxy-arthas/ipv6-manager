@@ -13,7 +13,7 @@ import manager.infrastructure.common.Exception.StatusFailException;
 
 public interface AuthenticationService {
 
-    AuthenticationResponseVO register(RegisterRequestDTO request) throws StatusFailException;
+    AuthenticationResponseVO register(RegisterRequestDTO request);
 
     AuthenticationResponseVO authenticate(AuthenticationRequestDTO request);
 

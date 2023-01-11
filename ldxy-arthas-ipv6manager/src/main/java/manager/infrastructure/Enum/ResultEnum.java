@@ -1,4 +1,6 @@
-package manager.infrastructure.common;
+package manager.infrastructure.Enum;
+
+import manager.infrastructure.common.IResult;
 
 /**
  * @Author: yuluo

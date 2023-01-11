@@ -6,7 +6,7 @@ import manager.infrastructure.common.Exception.LoginException;
 import manager.infrastructure.common.Exception.UserAuthorizationException;
 import manager.infrastructure.common.Exception.ValidateCodeException;
 import manager.infrastructure.common.Result;
-import manager.infrastructure.common.ResultEnum;
+import manager.infrastructure.Enum.ResultEnum;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;

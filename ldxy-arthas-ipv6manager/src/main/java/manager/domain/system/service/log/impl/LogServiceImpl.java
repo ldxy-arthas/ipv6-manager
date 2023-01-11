@@ -22,8 +22,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LogServiceImpl implements LogService {
 
-    private final Logger logger = LoggerFactory.getLogger(LogServiceImpl.class);
-
     private final SystemRepository system;
 
     /**

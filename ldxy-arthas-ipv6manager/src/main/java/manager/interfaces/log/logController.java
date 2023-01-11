@@ -1,9 +1,7 @@
 package manager.interfaces.log;
 
 import lombok.RequiredArgsConstructor;
-import manager.domain.system.service.log.LogService;
-import manager.infrastructure.Enum.BusinessType;
-import manager.infrastructure.annotation.Log;
+import manager.application.SystemServiceManager;
 import manager.infrastructure.common.Result;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,20 +16,19 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class logController {
 
-    private final LogService logService;
+    private final SystemServiceManager systemServiceManager;
 
     @GetMapping("/")
     public Result<?> getLogs() {
 
-        return Result.success(logService.getLogs());
+        return Result.success(systemServiceManager.getLog());
     }
 
 
     @DeleteMapping("/")
-    @Log(title = "删除数据库日志", businessType = BusinessType.DELETE)
     public Result<?> deleteDBLog() {
 
-        return Result.success(logService.deleteDBLog());
+        return Result.success(systemServiceManager.deleteDBLog());
     }
 
 }

@@ -1,6 +1,7 @@
 package manager.infrastructure.common;
 
 import lombok.Data;
+import manager.infrastructure.Enum.ResultEnum;
 
 import java.io.Serializable;
 import java.util.Objects;

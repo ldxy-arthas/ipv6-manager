@@ -9,12 +9,11 @@ import manager.domain.system.service.auth.AuthenticationService;
 import manager.infrastructure.Enum.Role;
 import manager.infrastructure.cache.LoginUserCache;
 import manager.infrastructure.common.Exception.StatusFailException;
-import manager.infrastructure.dao.UserDao;
 import manager.infrastructure.utils.JwtService;
 import manager.infrastructure.validator.UserValidator;
+import manager.repository.impl.SystemRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +27,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
 
-    private final UserDao repository;
+    private final SystemRepository repository;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -38,15 +37,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final UserValidator userValidator;
 
-    public AuthenticationResponseVO register(RegisterRequestDTO request) throws StatusFailException {
-
-        // TODO：我觉得应该在application处理异常 service要抛出去这个异常
-
-        userValidator.validateUser((TUser.builder()
-                .username(request.getName())
-                .password(request.getPassword())
-                .build()
-        ));
+    public AuthenticationResponseVO register(RegisterRequestDTO request) {
 
         var user = TUser.builder()
                 .username(request.getName())
@@ -55,7 +46,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .role(Role.USER)
                 .build();
 
-        repository.save(user);
+        repository.getUserDao().save(user);
 
         var jwtToken = jwtService.generateToken(user);
 
@@ -73,7 +64,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                         request.getPassword()
                 )
         );
-        var user = repository.findByUsername(request.getUsername())
+        var user = repository.getUserDao().findByUsername(request.getUsername())
                 .orElseThrow();
 
         var jwtToken = jwtService.generateToken(user);
