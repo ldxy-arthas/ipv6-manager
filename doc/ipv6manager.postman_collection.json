@@ -13,15 +13,24 @@
 					"request": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{ipv6managerHost}}:{{ipv6managerPort}}/api/user/login",
+							"raw": "{{ipv6managerHost}}:{{ipv6managerPort}}/api/auth/login",
 							"host": [
 								"{{ipv6managerHost}}"
 							],
 							"port": "{{ipv6managerPort}}",
 							"path": [
 								"api",
-								"user",
+								"auth",
 								"login"
 							]
 						}
@@ -33,14 +42,24 @@
 					"request": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"yuluo\",\r\n    \"password\":\"w082916x\",\r\n    \"region\":\"庆阳市\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{ipv6managerHost}}:{{ipv6managerPort}}/user/register",
+							"raw": "{{ipv6managerHost}}:{{ipv6managerPort}}/api/auth/register",
 							"host": [
 								"{{ipv6managerHost}}"
 							],
 							"port": "{{ipv6managerPort}}",
 							"path": [
-								"user",
+								"api",
+								"auth",
 								"register"
 							]
 						}
@@ -263,14 +282,24 @@
 				{
 					"name": "查看用户操作日志",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ5dWx1byIsImlhdCI6MTY3MzQyMDUxNiwiZXhwIjoxNjczNDIxOTU2fQ.3zncSyQEL_aAk0DopkjBF1pw5Uj1IzG6e_R54wUU2SM",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{ipv6managerHost}}:{{collectionIpv6Port}}/api/log/",
+							"raw": "{{ipv6managerHost}}:{{ipv6managerPort}}/api/log/",
 							"host": [
 								"{{ipv6managerHost}}"
 							],
-							"port": "{{collectionIpv6Port}}",
+							"port": "{{ipv6managerPort}}",
 							"path": [
 								"api",
 								"log",
@@ -300,6 +329,25 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "演示控制器",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ipv6managerHost}}:{{ipv6managerPort}}/api/demo-controller",
+					"host": [
+						"{{ipv6managerHost}}"
+					],
+					"port": "{{ipv6managerPort}}",
+					"path": [
+						"api",
+						"demo-controller"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
