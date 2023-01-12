@@ -10,7 +10,8 @@ public enum ClassNameEnum {
 
     AUTHENTICATION_SERVICE_IMPL("manager.domain.system.service.auth.impl.AuthenticationServiceImpl"),
     LOG_SERVICE_IMPL("manager.domain.system.service.log.impl.LogServiceImpl"),
-    SYSTEM_SERVICE_MANAGER("manager.application.SystemServiceManager");
+    SYSTEM_SERVICE_MANAGER("manager.application.SystemServiceManager"),
+    CAPTCHA_SERVICE("manager.infrastructure.captcha.CaptchaService");
 
     private String des;
 

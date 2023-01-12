@@ -1,7 +1,5 @@
 package manager.application;
 
-import jakarta.annotation.Resource;
-import manager.infrastructure.utils.LoggerService;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,8 +10,4 @@ import org.springframework.stereotype.Component;
 
 @Component
 public abstract class DefaultServiceManager {
-
-    @Resource
-    private LoggerService loggerService;
-
 }

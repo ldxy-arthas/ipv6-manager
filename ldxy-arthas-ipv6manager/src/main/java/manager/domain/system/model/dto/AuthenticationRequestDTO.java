@@ -16,6 +16,13 @@ import manager.domain.system.model.entity.TUser;
 public class AuthenticationRequestDTO {
 
     private String username;
+
     private String password;
+
+    private String codeId;
+
+    private String code;
+
+    private String token;
 
 }
