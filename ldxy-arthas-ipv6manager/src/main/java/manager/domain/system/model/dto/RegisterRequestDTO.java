@@ -16,7 +16,13 @@ import manager.domain.system.model.entity.TUser;
 public class RegisterRequestDTO {
 
     private String name;
+
     private String password;
+
     private String region;
+
+    private String codeId;
+
+    private String code;
 
 }

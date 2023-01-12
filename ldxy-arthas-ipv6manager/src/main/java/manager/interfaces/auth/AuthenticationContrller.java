@@ -38,4 +38,11 @@ public class AuthenticationContrller {
         return (systemServiceManager.login(request));
     }
 
+    @PostMapping("/logout")
+    public Result<Boolean> logut(
+            @RequestBody AuthenticationRequestDTO request
+    ){
+        return (systemServiceManager.logout(request));
+    }
+
 }

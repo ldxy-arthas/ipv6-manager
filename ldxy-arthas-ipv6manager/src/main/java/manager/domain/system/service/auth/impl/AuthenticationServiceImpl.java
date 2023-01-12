@@ -8,9 +8,8 @@ import manager.domain.system.model.vo.AuthenticationResponseVO;
 import manager.domain.system.service.auth.AuthenticationService;
 import manager.infrastructure.Enum.Role;
 import manager.infrastructure.cache.LoginUserCache;
-import manager.infrastructure.common.Exception.StatusFailException;
 import manager.infrastructure.utils.JwtService;
-import manager.infrastructure.validator.UserValidator;
+import manager.infrastructure.utils.LoggerService;
 import manager.repository.impl.SystemRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -35,8 +34,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final AuthenticationManager authenticationManager;
 
-    private final UserValidator userValidator;
-
     public AuthenticationResponseVO register(RegisterRequestDTO request) {
 
         var user = TUser.builder()
@@ -51,6 +48,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         var jwtToken = jwtService.generateToken(user);
 
         LoginUserCache.set(jwtToken, user);
+
+        LoggerService.authenticationServiceImplLogger.info("用户: {} 注册成功！", request.getName());
 
         return AuthenticationResponseVO.builder()
                 .token(jwtToken)
@@ -71,8 +70,24 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         LoginUserCache.get(jwtToken);
 
+        LoggerService.systemServiceManagerLogger.info("用户: {} 登录成功！", request.getUsername());
+
         return AuthenticationResponseVO.builder()
                 .token(jwtToken)
                 .build();
     }
+
+    @Override
+    public Boolean logout(AuthenticationRequestDTO requestDTO) {
+
+        boolean delete = LoginUserCache.delete(requestDTO.getToken());
+
+        if (delete) {
+            LoggerService.authenticationServiceImplLogger.error("删除用户token失败！{}", delete);
+            throw new RuntimeException("删除用户token失败！");
+        }
+
+        return true;
+    }
+
 }

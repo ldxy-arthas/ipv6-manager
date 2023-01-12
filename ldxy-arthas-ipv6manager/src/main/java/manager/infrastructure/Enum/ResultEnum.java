@@ -18,7 +18,8 @@ public enum ResultEnum implements IResult {
     FORBIDDEN(7001, "用户无权限访问资源"),
     REGISTER_FAILED(7002, "用户注册失败"),
     AUTHENTICATE_FAILED(7003, "用户登录验证失败"),
-    USER_NOT_FOUND(7004, "用户不存在");
+    USER_NOT_FOUND(7004, "用户不存在"),
+    VERIFY_CODE_FAILED(7005, "验证码验证失败");
 
     /*ipv6状态枚举*/
 

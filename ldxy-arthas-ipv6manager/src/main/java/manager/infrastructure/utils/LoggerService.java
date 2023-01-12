@@ -16,8 +16,10 @@ public record LoggerService() {
 
     public static final Logger systemServiceManagerLogger = LoggerFactory.getLogger(ClassNameEnum.SYSTEM_SERVICE_MANAGER.getDes());
 
-    public static final Logger AuthenticationServiceImplLogger = LoggerFactory.getLogger(ClassNameEnum.AUTHENTICATION_SERVICE_IMPL.getDes());
+    public static final Logger authenticationServiceImplLogger = LoggerFactory.getLogger(ClassNameEnum.AUTHENTICATION_SERVICE_IMPL.getDes());
 
-    public static final Logger LogServiceImplLogger = LoggerFactory.getLogger(ClassNameEnum.LOG_SERVICE_IMPL.getDes());
+    public static final Logger logServiceImplLogger = LoggerFactory.getLogger(ClassNameEnum.LOG_SERVICE_IMPL.getDes());
+
+    public static final Logger captchaServiceLogger = LoggerFactory.getLogger(ClassNameEnum.CAPTCHA_SERVICE.getDes());
 
 }

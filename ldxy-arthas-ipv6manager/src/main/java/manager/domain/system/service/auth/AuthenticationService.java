@@ -3,7 +3,6 @@ package manager.domain.system.service.auth;
 import manager.domain.system.model.dto.AuthenticationRequestDTO;
 import manager.domain.system.model.dto.RegisterRequestDTO;
 import manager.domain.system.model.vo.AuthenticationResponseVO;
-import manager.infrastructure.common.Exception.StatusFailException;
 
 /**
  * @Author: yuluo
@@ -17,4 +16,5 @@ public interface AuthenticationService {
 
     AuthenticationResponseVO authenticate(AuthenticationRequestDTO request);
 
+    Boolean logout(AuthenticationRequestDTO requestDTO);
 }

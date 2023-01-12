@@ -19,7 +19,20 @@ public class UserValidator {
 
     private final CommonValidator commonValidator;
 
-    public void validateUser(TUser user) throws StatusFailException {
+    public void validateUserLogin(TUser user) throws StatusFailException {
+
+        if (Objects.isNull(user.getUsername())) {
+            throw new StatusFailException("用户名不能为空！");
+        }
+        if (Objects.isNull(user.getPassword())) {
+            throw new StatusFailException("用户密码不能为空！");
+        }
+
+        commonValidator.validateContentLength(user.getPassword(), "用户密码", 10);
+        commonValidator.validateContentLength(user.getUsername(), "用户名", 6);
+    }
+
+    public void validateUserRegister(TUser user) throws StatusFailException {
 
         if (Objects.isNull(user.getUsername())) {
             throw new StatusFailException("用户名不能为空！");
@@ -32,7 +45,8 @@ public class UserValidator {
         }
 
         commonValidator.validateContentLength(user.getPassword(), "用户密码", 10);
-        commonValidator.validateContentLength(user.getUsername(), "用户名", 5);
+        commonValidator.validateContentLength(user.getUsername(), "用户名", 6);
 
     }
+
 }

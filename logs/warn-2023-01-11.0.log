@@ -1,0 +1,1 @@
+2023-01-11 23:05:54.487 [RMI TCP Connection(3)-192.168.10.1] WARN  o.s.boot.actuate.health.HealthEndpointSupport - Health contributor org.springframework.boot.actuate.autoconfigure.health.HealthEndpointConfiguration$AdaptedReactiveHealthContributors$1 (redis) took 122134ms to respond

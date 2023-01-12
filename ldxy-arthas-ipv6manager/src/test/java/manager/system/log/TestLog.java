@@ -16,16 +16,18 @@ import java.io.IOException;
  * @Description: TODO
  */
 
+@Deprecated
 @SpringBootTest
 public class TestLog {
 
     @Resource
     private LogService logService;
 
+    @Deprecated
     @Test
     void testDeleteSysLog() throws IOException {
 
-        LogOperationResponseVO logOperationResponseVO = logService.deleteSysLogFile();
+        LogOperationResponseVO logOperationResponseVO = logService.deleteDBLog();
         Assert.isTrue(logOperationResponseVO.getFlag(), "删除系统运行日志失败！");
     }
 
