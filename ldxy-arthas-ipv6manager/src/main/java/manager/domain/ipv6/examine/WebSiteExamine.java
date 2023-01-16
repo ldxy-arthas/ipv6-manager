@@ -13,7 +13,7 @@ public class WebSiteExamine extends DefaultExamine{
         if (res.equals("0")){
             return null;
         }
-        //反查一下数据库，获取id
+        //反查一下数据库，获取id没有的话id就没有
         TWebsiteInfo websiteInfo = ipv6Repository.getWebsiteInfoDao().findByWebsiteInfoAddress(webSiteUrl);
         websiteInfo.setIpv6Address(res);
         websiteInfo.setWebsiteInfoAddress(webSiteUrl);

@@ -36,7 +36,8 @@ public class SecurityConfiguration {
                 .requestMatchers(
                         "/api/auth/**",
                         "/actuator/**",
-                        "/api/code/"
+                        "/api/code/",
+                        "ipv6Manager/**"
                 )
                 .permitAll()
                 .anyRequest()
