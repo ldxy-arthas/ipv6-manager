@@ -6,7 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.io.Serial;
@@ -42,6 +44,7 @@ public class TLog implements Serializable {
     /**
      * 操作类型
      */
+    @Field("business_type_des")
     private String businessTypeDes;
 
     /**
@@ -104,5 +107,14 @@ public class TLog implements Serializable {
     private Date opTime;
 
     private String hint;
+
+    @Field("create_time")
+    @CreatedDate
+    @JsonFormat(locale = "zh",  timezone = "Asia/Shanghai", shape = JsonFormat.Shape.STRING)
+    private java.util.Date createTime;
+
+    @JsonFormat(locale = "zh",  timezone = "Asia/Shanghai", shape = JsonFormat.Shape.STRING)
+    @LastModifiedDate
+    private java.util.Date updateTime;
 
 }

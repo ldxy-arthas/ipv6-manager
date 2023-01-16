@@ -16,6 +16,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 /**
  * @Author: yuluo
  * @CreateTime: 2023-01-07  12:26
@@ -35,6 +37,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponseVO register(RegisterRequestDTO request) {
+
+        // 验证用户名唯一性
+        Optional<TUser> curUser = repository.getUserDao().findByUsername(request.getName());
+        if (curUser.isPresent()) {
+            throw new RuntimeException("用户名已存在");
+        }
 
         var user = TUser.builder()
                 .username(request.getName())

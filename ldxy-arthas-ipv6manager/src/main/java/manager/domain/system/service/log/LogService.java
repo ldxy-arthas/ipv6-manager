@@ -1,6 +1,7 @@
 package manager.domain.system.service.log;
 
 
+import manager.domain.system.model.dto.PageTagDao;
 import manager.domain.system.model.entity.TLog;
 import manager.domain.system.model.vo.LogOperationResponseVO;
 
@@ -19,5 +20,5 @@ public interface LogService {
 
     LogOperationResponseVO deleteDBLog();
 
-    LogOperationResponseVO getLogs();
+    LogOperationResponseVO getLogs(PageTagDao page);
 }

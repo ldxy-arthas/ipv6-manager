@@ -2,6 +2,7 @@ package manager.interfaces.log;
 
 import lombok.RequiredArgsConstructor;
 import manager.application.SystemServiceManager;
+import manager.domain.system.model.dto.PageTagDao;
 import manager.infrastructure.common.Result;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,9 +20,9 @@ public class logController {
     private final SystemServiceManager systemServiceManager;
 
     @GetMapping("/")
-    public Result<?> getLogs() {
+    public Result<?> getLogs(@RequestBody PageTagDao page) {
 
-        return Result.success(systemServiceManager.getLog());
+        return Result.success(systemServiceManager.getLog(page));
     }
 
 
