@@ -8,6 +8,8 @@ import manager.repository.impl.SystemRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Objects;
+
 @SpringBootTest
 @RequiredArgsConstructor
 class Ipv6managerApplicationTest {

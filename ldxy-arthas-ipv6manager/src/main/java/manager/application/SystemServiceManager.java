@@ -2,20 +2,25 @@ package manager.application;
 
 import lombok.RequiredArgsConstructor;
 import manager.domain.system.model.dto.AuthenticationRequestDTO;
+import manager.domain.system.model.dto.PageTagDao;
 import manager.domain.system.model.dto.RegisterRequestDTO;
 import manager.domain.system.model.entity.TUser;
 import manager.domain.system.model.vo.AuthenticationResponseVO;
+import manager.domain.system.model.vo.LogOperationResponseVO;
 import manager.domain.system.model.vo.VerifyCodeVo;
 import manager.domain.system.service.auth.AuthenticationService;
 import manager.domain.system.service.log.LogService;
 import manager.infrastructure.Enum.BusinessType;
 import manager.infrastructure.Enum.ResultEnum;
+import manager.infrastructure.Enum.Role;
 import manager.infrastructure.annotation.Log;
 import manager.infrastructure.captcha.CaptchaService;
 import manager.infrastructure.common.Exception.StatusFailException;
 import manager.infrastructure.common.Result;
+import manager.infrastructure.utils.JwtService;
 import manager.infrastructure.utils.LoggerService;
 import manager.infrastructure.validator.UserValidator;
+import manager.repository.impl.SystemRepository;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.BadPaddingException;
@@ -24,6 +29,8 @@ import javax.crypto.NoSuchPaddingException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @Author: yuluo
@@ -42,6 +49,10 @@ public class SystemServiceManager extends DefaultServiceManager {
     private final UserValidator userValidator;
 
     private final CaptchaService captchaService;
+
+    private final SystemRepository systemRepository;
+
+    private final JwtService jwtService;
 
     public Result<AuthenticationResponseVO> login(AuthenticationRequestDTO requestDTO) {
 
@@ -105,13 +116,25 @@ public class SystemServiceManager extends DefaultServiceManager {
         return Result.success(verifyCodeVo);
     }
 
-    public Result<?> getLog() {
+    public Result<LogOperationResponseVO> getLog(PageTagDao page) {
 
-        return Result.success(logService.getLogs());
+        String username = jwtService.extractUsername(page.getToken());
+
+        // 用户操作日志只能管理员查看 鉴权
+        Optional<TUser> curUser = systemRepository.getUserDao().findByUsername(username);
+        if (
+                curUser.isPresent()
+                &&
+                !Objects.equals(curUser.get().getRole(), Role.ADMIN)
+        ) {
+            throw new RuntimeException("无权查看操作日志！");
+        }
+
+        return Result.success(logService.getLogs(page));
     }
 
     @Log(title = "删除数据库日志", businessType = BusinessType.DELETE)
-    public Result<?> deleteDBLog() {
+    public Result<LogOperationResponseVO> deleteDBLog() {
 
         LoggerService.systemServiceManagerLogger.info("删除日志数据成功！");
 

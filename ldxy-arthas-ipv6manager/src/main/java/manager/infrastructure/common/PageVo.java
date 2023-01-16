@@ -1,14 +1,16 @@
-package manager.domain.system.model.vo;
+package manager.infrastructure.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import manager.infrastructure.common.PageVo;
+import manager.domain.system.model.entity.TLog;
+
+import java.util.List;
 
 /**
  * @Author: yuluo
- * @CreateTime: 2023-01-09  11:24
+ * @CreateTime: 2023-01-16  20:56
  * @Description: TODO
  */
 
@@ -16,11 +18,9 @@ import manager.infrastructure.common.PageVo;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class LogOperationResponseVO {
+public class PageVo {
 
-    private Boolean flag;
+    long count;
 
-    private PageVo pageVo;
-
+    private List<TLog> logList;
 }
-

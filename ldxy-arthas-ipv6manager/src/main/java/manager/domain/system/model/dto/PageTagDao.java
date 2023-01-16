@@ -1,14 +1,13 @@
-package manager.domain.system.model.vo;
+package manager.domain.system.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import manager.infrastructure.common.PageVo;
 
 /**
  * @Author: yuluo
- * @CreateTime: 2023-01-09  11:24
+ * @CreateTime: 2023-01-16  19:46
  * @Description: TODO
  */
 
@@ -16,11 +15,12 @@ import manager.infrastructure.common.PageVo;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class LogOperationResponseVO {
+public class PageTagDao {
 
-    private Boolean flag;
+    String token;
 
-    private PageVo pageVo;
+    int pageNum;
+
+    int pageSize;
 
 }
-
