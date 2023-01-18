@@ -10,13 +10,13 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
-import java.math.BigInteger;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
 import java.util.Base64;
-import java.util.Objects;
+
+import static manager.infrastructure.utils.Security.SecurityUtils.decrypt;
+import static manager.infrastructure.utils.Security.SecurityUtils.encrypt;
 
 /**
  * @Author: yuluo
@@ -25,16 +25,6 @@ import java.util.Objects;
  */
 
 public class AESTest {
-
-    private static final SecretKey secretEncryptionKey;
-
-    static {
-        try {
-            secretEncryptionKey = AESEncryption.getSecretEncryptionKey();
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     private static String getId() {
         return UuidUtil.getUuid();
@@ -46,15 +36,38 @@ public class AESTest {
         String id = getId();
         System.out.println("明文：" + id);
 
-        byte[] bytes = AESEncryption.encryptText(id, secretEncryptionKey);
+        byte[] bytes = AESEncryption.encryptText(id);
         String string = Base64.getEncoder().encodeToString(bytes);
         System.out.println("加密：" + string);
 
         byte[] decode = Base64.getDecoder().decode(string);
-        String s = AESEncryption.decryptText(decode, secretEncryptionKey);
+        String s = AESEncryption.decryptText(decode);
         System.out.println("解密：" + s);
 
         Assert.equals(id, s);
+    }
+
+    @Test
+    void testDe() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
+        String s = "76Hc1KzgUFjFFkpTms38fY8CBYF7yY+NXXdvUzdop4VjJSMX/jO8lEgcQncTor3ymMoBYPgsX/fpCEu8Ha8HB1kLLFOzepmv2fKb26rXlGS//F5a6aPaa/TSl8SBv/MubaM3Bkyj5ebgwVsKLflWAL3TQpErKXhIlEmy8nNI6d5mj0Nu+3rz3514dIq+zzFmMVHS";
+
+        String decrypt = decrypt(s);
+        System.out.println(decrypt);
+    }
+
+    @Test
+    void testDecryptPlus() throws NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, InvalidAlgorithmParameterException {
+
+        String id = getId();
+        System.out.println("明文：" + id);
+
+        String encrypt = encrypt(id);
+        System.out.println("加密：" + encrypt);
+
+        String decrypt = decrypt(encrypt);
+        System.out.println("解密：" + decrypt);
+
+        Assert.equals(id, decrypt);
     }
 
 }

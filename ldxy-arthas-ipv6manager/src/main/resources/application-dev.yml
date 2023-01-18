@@ -8,7 +8,7 @@ management:
 spring:
   data:
     mongodb:
-      uri: mongodb://112.74.111.23:27017/ipv6_manager
+      uri: mongodb://localhost:27017/ipv6_manager
       database: ipv6_manager
 
     redis:
