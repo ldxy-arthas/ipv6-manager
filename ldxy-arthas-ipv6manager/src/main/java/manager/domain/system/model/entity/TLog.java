@@ -13,7 +13,7 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 @Data
 @Builder
@@ -111,10 +111,10 @@ public class TLog implements Serializable {
     @Field("create_time")
     @CreatedDate
     @JsonFormat(locale = "zh",  timezone = "Asia/Shanghai", shape = JsonFormat.Shape.STRING)
-    private java.util.Date createTime;
+    private Date createTime;
 
     @JsonFormat(locale = "zh",  timezone = "Asia/Shanghai", shape = JsonFormat.Shape.STRING)
     @LastModifiedDate
-    private java.util.Date updateTime;
+    private Date updateTime;
 
 }

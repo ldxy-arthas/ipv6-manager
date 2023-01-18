@@ -16,7 +16,14 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
+
+import static manager.infrastructure.utils.Security.SecurityUtils.encrypt;
 
 /**
  * @Author: yuluo
@@ -36,7 +43,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationResponseVO register(RegisterRequestDTO request) {
+    public AuthenticationResponseVO register(RegisterRequestDTO request) throws IllegalBlockSizeException, BadPaddingException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
 
         // 验证用户名唯一性
         Optional<TUser> curUser = repository.getUserDao().findByUsername(request.getName());
@@ -54,17 +61,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         repository.getUserDao().save(user);
 
         var jwtToken = jwtService.generateToken(user);
-
         LoginUserCache.set(jwtToken, user);
+        String encrypt = encrypt(jwtToken);
 
         LoggerService.authenticationServiceImplLogger.info("用户: {} 注册成功！", request.getName());
 
         return AuthenticationResponseVO.builder()
-                .token(jwtToken)
+                .token(encrypt)
                 .build();
     }
 
-    public AuthenticationResponseVO authenticate(AuthenticationRequestDTO request) {
+    public AuthenticationResponseVO authenticate(AuthenticationRequestDTO request) throws IllegalBlockSizeException, BadPaddingException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getUsername(),
@@ -75,13 +82,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .orElseThrow();
 
         var jwtToken = jwtService.generateToken(user);
-
-        LoginUserCache.get(jwtToken);
+        LoginUserCache.set(jwtToken, user);
+        String encrypt = encrypt(jwtToken);
 
         LoggerService.systemServiceManagerLogger.info("用户: {} 登录成功！", request.getUsername());
 
         return AuthenticationResponseVO.builder()
-                .token(jwtToken)
+                .token(encrypt)
                 .build();
     }
 

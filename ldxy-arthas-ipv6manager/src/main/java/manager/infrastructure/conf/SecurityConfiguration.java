@@ -29,6 +29,8 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
+        // "/api/log/getLog" 用于单元测试
+
         http
                 .csrf()
                 .disable()

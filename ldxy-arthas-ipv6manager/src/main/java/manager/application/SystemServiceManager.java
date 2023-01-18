@@ -71,7 +71,19 @@ public class SystemServiceManager extends DefaultServiceManager {
             return Result.failed(ResultEnum.VERIFY_CODE_FAILED, ResultEnum.VERIFY_CODE_FAILED.getMessage());
         }
 
-        return Result.success(authenticationService.authenticate(requestDTO));
+        AuthenticationResponseVO register;
+        try {
+            register = authenticationService.authenticate(requestDTO);
+        } catch (
+                NoSuchPaddingException |
+                IllegalBlockSizeException |
+                NoSuchAlgorithmException |
+                BadPaddingException |
+                InvalidKeyException e) {
+            throw new RuntimeException(e);
+        }
+
+        return Result.success(register);
     }
 
     public Result<Boolean> logout(AuthenticationRequestDTO requestDTO) {
@@ -96,7 +108,19 @@ public class SystemServiceManager extends DefaultServiceManager {
             return Result.failed(ResultEnum.VERIFY_CODE_FAILED, ResultEnum.VERIFY_CODE_FAILED.getMessage());
         }
 
-        return Result.success(authenticationService.register(requestDTO));
+        AuthenticationResponseVO register;
+        try {
+             register = authenticationService.register(requestDTO);
+        } catch (
+                NoSuchPaddingException |
+                IllegalBlockSizeException |
+                NoSuchAlgorithmException |
+                BadPaddingException |
+                InvalidKeyException e) {
+            throw new RuntimeException(e);
+        }
+
+        return Result.success(register);
     }
 
     public Result<VerifyCodeVo> getVerifyCode() {
@@ -124,7 +148,7 @@ public class SystemServiceManager extends DefaultServiceManager {
         Optional<TUser> curUser = systemRepository.getUserDao().findByUsername(username);
         if (
                 curUser.isPresent()
-                &&
+                        &&
                 !Objects.equals(curUser.get().getRole(), Role.ADMIN)
         ) {
             throw new RuntimeException("无权查看操作日志！");

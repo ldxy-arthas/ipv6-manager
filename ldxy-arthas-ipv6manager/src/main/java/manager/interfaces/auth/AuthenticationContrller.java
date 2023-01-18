@@ -1,17 +1,11 @@
 package manager.interfaces.auth;
 
-import jakarta.annotation.Resource;
 import lombok.RequiredArgsConstructor;
 import manager.application.SystemServiceManager;
 import manager.domain.system.model.dto.AuthenticationRequestDTO;
 import manager.domain.system.model.dto.RegisterRequestDTO;
-import manager.domain.system.model.entity.TUser;
 import manager.domain.system.model.vo.AuthenticationResponseVO;
 import manager.infrastructure.common.Result;
-import manager.repository.impl.SystemRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 /**
