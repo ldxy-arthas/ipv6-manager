@@ -2,10 +2,27 @@ package testUtils
 
 import (
 	"collect-ipv6-distribution-info-sys/pkg/util/common"
+	"encoding/json"
 	"fmt"
-	"github.com/sirupsen/logrus"
+	"io/ioutil"
+	"net/http"
+	"os"
 	"testing"
+
+	"github.com/sirupsen/logrus"
 )
+
+type ipInfo struct {
+	country  string
+	location string
+	local    string
+	City     string
+	Area     string
+	Isp      string
+	Ip       string
+	Code     int
+	Desc     string
+}
 
 func TestGetOutBoundIP(t *testing.T) {
 	ip, err := common.GetOutBoundIP()
@@ -14,4 +31,32 @@ func TestGetOutBoundIP(t *testing.T) {
 	}
 
 	fmt.Println("获取成功", ip)
+}
+
+func Test2(t *testing.T) {
+	//url := "https://ip.useragentinfo.com/ipv6/2402:4e00:40:40::2:3b6"
+	//ipv6 := "2402:4e00:40:40::2:3b6"
+	url2 := "https://ip.zxinc.org/api.php?type=json&ip=2402:4e00:40:40::2:3b6"
+	resp, error := http.Get(url2)
+	if error != nil {
+		fmt.Printf("query occur a error :%v ", error)
+		os.Exit(1)
+	}
+	data, error := ioutil.ReadAll(resp.Body)
+	resp.Body.Close()
+	if error != nil {
+		fmt.Printf("read data from response error :%v", error)
+		os.Exit(1)
+	}
+	ip := ipInfo{}
+	fmt.Printf("result is :%s\n", data)
+	json.Unmarshal(data, &ip)
+	if ip.Code == 200 {
+		fmt.Printf("query success! %v\n", ip)
+		fmt.Println(ip.country)
+	}
+}
+
+func main() {
+
 }
