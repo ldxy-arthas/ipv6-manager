@@ -2,10 +2,10 @@ package repository
 
 import (
 	"collect-ipv6-distribution-info-sys/conf"
+	logger "collect-ipv6-distribution-info-sys/pkg/util/log"
 	"context"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"log"
 )
 
 var (
@@ -14,18 +14,23 @@ var (
 
 func Init() {
 
-	clientOptions := options.Client().ApplyURI(conf.Db + "://" + conf.DbHost + ":" + conf.DbPort)
+	dsn := conf.Db + "://" + conf.DbUser + ":" +
+		conf.DbPassword + "@" + conf.DbHost + ":" + conf.DbPort + "/" + conf.DbName
+	logger.LogrusObj.Infof("db url: %s", dsn)
+
+	clientOptions := options.Client().ApplyURI(dsn)
 	client, err := mongo.Connect(context.TODO(), clientOptions)
+
 	if err != nil {
-		log.Fatal(err)
+		logger.LogrusObj.Fatalf("init db connection failed: err:%v", err)
 	}
+
+	_client = client
 
 	err = CheckDbConnection()
 	if err != nil {
 		return
 	}
-
-	_client = client
 
 }
 

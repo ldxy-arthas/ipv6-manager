@@ -40,7 +40,7 @@ func (service Ipv6CollectionService) InsertInfo(ctx context.Context) serializer.
 	code := e.Success
 
 	ipv6CollectionDao := repository.NewIpv6Dao()
-	operaId, err := ipv6CollectionDao.InsertOne(ctx, ipv6Collection)
+	operaId, err := ipv6CollectionDao.SaveInfo(ctx, ipv6Collection)
 	if err != nil {
 		code = e.SaveIpv6CollectionError
 		logrus.Errorf("insert failed err:%s", err)
@@ -60,6 +60,9 @@ func (service Ipv6CollectionService) InsertInfo(ctx context.Context) serializer.
 }
 
 func parsingRunRes(ctx context.Context) (outStr string) {
+
+	// TODO: 需要解析执行结果
+
 	outStr, errStr := shell.Run()
 	fmt.Printf("\nout:\n%s\nerr:\n%s\n", outStr, errStr)
 
