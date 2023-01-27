@@ -2,8 +2,8 @@ package repository
 
 import (
 	"collect-ipv6-distribution-info-sys/conf"
+	logger "collect-ipv6-distribution-info-sys/pkg/util/log"
 	"context"
-	"log"
 
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"

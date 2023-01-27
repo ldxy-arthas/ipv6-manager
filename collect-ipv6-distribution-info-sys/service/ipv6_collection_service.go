@@ -46,7 +46,9 @@ func (service Ipv6CollectionService) InsertInfo(ctx context.Context) serializer.
 	code := e.Success
 
 	// TODO: 解析content从中获取ipv6info实体需要的数据 或者也可以在parsingRunRes中进行，直接返回实体
-
+	//通过upv6获取地区信息(前提是要先获取ipv6)
+	var info = getRegion(ipv6Collection.Ipv6)
+	ipv6Collection.Region = info.Data.Country
 	ipv6CollectionDao := repository.NewIpv6Dao()
 	operaId, err := ipv6CollectionDao.SaveInfo(ctx, ipv6Collection)
 	if err != nil {
