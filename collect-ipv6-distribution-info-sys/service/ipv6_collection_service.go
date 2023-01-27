@@ -39,6 +39,8 @@ func (service Ipv6CollectionService) InsertInfo(ctx context.Context) serializer.
 	var ipv6Collection *model.Ipv6Info
 	code := e.Success
 
+	// TODO: 解析content从中获取ipv6info实体需要的数据 或者也可以在parsingRunRes中进行，直接返回实体
+
 	ipv6CollectionDao := repository.NewIpv6Dao()
 	operaId, err := ipv6CollectionDao.SaveInfo(ctx, ipv6Collection)
 	if err != nil {
@@ -59,6 +61,7 @@ func (service Ipv6CollectionService) InsertInfo(ctx context.Context) serializer.
 
 }
 
+// 解析 shell 命令运行之后的运行结果 outStr 可以调整为 Ipv6Info 类型
 func parsingRunRes(ctx context.Context) (outStr string) {
 
 	// TODO: 需要解析执行结果
@@ -74,6 +77,8 @@ func parsingRunRes(ctx context.Context) (outStr string) {
 	return outStr
 }
 
+// 这里是因为直接将ipv6数据存进数据库中，可能过程中存在数据丢失情况，没有使用消息中间件，所以这么处理了一下，将shell
+// 命令执行时的状态存进去，然后在把ipv6信息存进去，起对照作用，相当于 数据备份
 func checkCollectionStatus(ctx context.Context, outStr, errStr string) (status *model.CollectionInfoStatus, err error) {
 
 	var collectionStatus model.CollectionInfoStatus
@@ -91,7 +96,7 @@ func checkCollectionStatus(ctx context.Context, outStr, errStr string) (status *
 	collectionStatus.Status = enum.SUCCESS
 	collectionStatus.Content = outStr
 
-	// 保存到数据中
+	// 保存到数据库中
 	var collectionService CollectionInfoStatusService
 	CollectionInfoStatusService.SaveStatus(collectionService, ctx, &collectionStatus)
 

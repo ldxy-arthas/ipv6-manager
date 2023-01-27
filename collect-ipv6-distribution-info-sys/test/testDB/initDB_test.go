@@ -3,6 +3,7 @@ package testDB
 import (
 	"collect-ipv6-distribution-info-sys/conf"
 	"collect-ipv6-distribution-info-sys/model"
+	"collect-ipv6-distribution-info-sys/pkg/enum"
 	"collect-ipv6-distribution-info-sys/repository"
 	"context"
 	"fmt"
@@ -32,8 +33,8 @@ func TestInsertData(t *testing.T) {
 		Id:         "123455",
 		RegionId:   100,
 		IsUsed:     1,
-		CreateTime: time.Now().Format("2006-01-02 15:04:05"),
-		UpdateTime: time.Now().Format("2006-01-02 15:04:05"),
+		CreateTime: time.Now().Format(enum.TimeStringFormat),
+		UpdateTime: time.Now().Format(enum.TimeStringFormat),
 	}
 
 	var ctx context.Context
@@ -52,7 +53,7 @@ func TestSaveIpv6CollectionStatus(t *testing.T) {
 
 	var collStatus = model.CollectionInfoStatus{
 		Id:             "1234",
-		CollectionTime: time.Now().Format("2006-01-02 15:04:05"),
+		CollectionTime: time.Now().Format(enum.TimeStringFormat),
 		Status:         "true",
 		CollectionIp:   "test-ip",
 		Content:        "",
