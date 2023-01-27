@@ -1,5 +1,9 @@
 package manager.application;
 
-public interface Ipv6ManagerService {
+import manager.domain.ipv6.model.entity.TIpv6Info;
 
+import java.util.List;
+
+public interface Ipv6ManagerService {
+    public List<TIpv6Info> findTIpv6InfosLikeRegion(String region);
 }
