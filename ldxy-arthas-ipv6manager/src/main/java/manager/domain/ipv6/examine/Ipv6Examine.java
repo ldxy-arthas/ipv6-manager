@@ -9,7 +9,7 @@ import java.util.List;
 public class Ipv6Examine extends DefaultExamine {
     public List<TIpv6Info> findTIpv6InfosLikeRegion(String region){
         List<TIpv6Info> ipv6InfoList;
-        ipv6InfoList = ipv6Repository.getIpv6InfoDao().findTIpv6InfosLikeRegion(region);
+        ipv6InfoList = ipv6Repository.getIpv6InfoDao().findTIpv6InfosByRegionLike(region);
         return ipv6InfoList;
     }
 }

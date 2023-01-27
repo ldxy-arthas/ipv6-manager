@@ -49,7 +49,7 @@ public class Ipv6ManagerController {
     public Result<Object> findByRegion(@PathVariable("page") String page, @PathVariable("size") String size,
                                @RequestBody String region){
         Pageable pageable = PageRequest.of(Integer.valueOf(page), Integer.valueOf(size));
-        List<TIpv6Info> TIpv6Infos=ipv6ManagerService.findTIpv6InfosLikeRegion(region);
+        List<TIpv6Info> TIpv6Infos=ipv6ManagerService.findTIpv6InfosByLikeRegion(region);
         return Result.success(TIpv6Infos);
     }
 

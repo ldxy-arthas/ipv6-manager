@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface Ipv6InfoDao extends MongoRepository<TIpv6Info, String> {
-    public List<TIpv6Info> findTIpv6InfosLikeRegion(String region);
+    public List<TIpv6Info> findTIpv6InfosByRegionLike(String region);
 }

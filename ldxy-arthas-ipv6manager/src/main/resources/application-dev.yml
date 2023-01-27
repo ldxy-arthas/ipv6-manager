@@ -8,9 +8,9 @@ management:
 spring:
   data:
     mongodb:
-      uri: mongodb://localhost:27017/ipv6_manager
+      uri: mongodb://112.74.111.23:27017
       database: ipv6_manager
-      username: piv6
+      username: ipv6
       password: 1998
 
     redis:
