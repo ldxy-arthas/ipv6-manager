@@ -10,7 +10,7 @@ func Start() {
 
 	// Generate RSS
 	addCronFunc(c, "@every 1m", func() {
-		// add service function
+		// TODO: add service function
 	})
 
 	c.Start()

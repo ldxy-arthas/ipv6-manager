@@ -11,22 +11,27 @@ import (
 
 var (
 	_client *mongo.Client
-	err     error
 )
 
 func Init() {
-	clientOptions := options.Client().ApplyURI(conf.Db + "://" + conf.DbUser + ":" + conf.DbPassword + "@" + conf.DbHost + ":" + conf.DbPort + "/" + conf.DbName)
-	_client, err = mongo.Connect(context.TODO(), clientOptions)
+
+	dsn := conf.Db + "://" + conf.DbUser + ":" +
+		conf.DbPassword + "@" + conf.DbHost + ":" + conf.DbPort + "/" + conf.DbName
+	logger.LogrusObj.Infof("db url: %s", dsn)
+
+	clientOptions := options.Client().ApplyURI(dsn)
+	client, err := mongo.Connect(context.TODO(), clientOptions)
+
 	if err != nil {
-		log.Fatal(err)
+		logger.LogrusObj.Fatalf("init db connection failed: err:%v", err)
 	}
+
+	_client = client
 
 	err = CheckDbConnection()
 	if err != nil {
 		return
 	}
-
-	// _client = client
 
 }
 

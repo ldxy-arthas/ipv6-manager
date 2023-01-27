@@ -14,7 +14,7 @@ func NewCollectionStatusDao() *CollectionStatusDao {
 	return &CollectionStatusDao{NewDBConnection("t_collection_status")}
 }
 
-func (dao *CollectionStatusDao) saveStatus(ctx context.Context, doc *model.CollectionInfoStatus) (operationId interface{}, err error) {
+func (dao *CollectionStatusDao) SaveStatus(ctx context.Context, doc *model.CollectionInfoStatus) (operationId interface{}, err error) {
 
 	res, err := dao.Collection.InsertOne(ctx, doc)
 	operationId = res.InsertedID
