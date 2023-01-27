@@ -34,7 +34,7 @@ public class TIpv6Info implements Serializable {
     /**
      * 地区id
      */
-    private String regionId;
+    private String region;
 
     /**
      * ipv6

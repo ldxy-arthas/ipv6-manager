@@ -9,9 +9,15 @@ import (
 	"collect-ipv6-distribution-info-sys/repository"
 	"collect-ipv6-distribution-info-sys/serializer"
 	"context"
+	"encoding/json"
 	"fmt"
-	"github.com/sirupsen/logrus"
+	"io/ioutil"
+	"net/http"
+	"os"
+	"strings"
 	"time"
+
+	"github.com/sirupsen/logrus"
 )
 
 type Ipv6CollectionService struct {
@@ -93,4 +99,44 @@ func checkCollectionStatus(ctx context.Context, outStr, errStr string) (status *
 	CollectionInfoStatusService.SaveStatus(collectionService, ctx, &collectionStatus)
 
 	return
+}
+
+func getRegion(ip string) ipInfo {
+	url := "https://ip.zxinc.org/api.php?type=json&ip="
+	url = url + ip
+	resp, error := http.Get(url)
+	if error != nil {
+		fmt.Printf("query occur a error :%v ", error)
+		os.Exit(1)
+	}
+	data, error := ioutil.ReadAll(resp.Body)
+	resp.Body.Close()
+	if error != nil {
+		fmt.Printf("read data from response error :%v", error)
+		os.Exit(1)
+	}
+	var info ipInfo
+	json.Unmarshal(data, &info)
+	var regin string
+	for _, val := range strings.Split(info.Data.Country, "\t") {
+		regin += val
+	}
+	info.Data.Country = regin
+
+	return info
+}
+
+type ipInfo struct {
+	Code string
+	Data struct {
+		Myip string
+		IP   struct {
+			Query string
+			Start string
+			End   string
+		}
+		Location string
+		Country  string
+		Local    string
+	}
 }

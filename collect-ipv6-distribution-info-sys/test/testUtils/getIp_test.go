@@ -7,21 +7,36 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"strings"
 	"testing"
 
 	"github.com/sirupsen/logrus"
 )
 
+// type ipInfo struct {
+// 	country  string
+// 	location string
+// 	local    string
+// 	City     string
+// 	Area     string
+// 	Isp      string
+// 	Ip       string
+// 	Code     int
+// 	Desc     string
+// }
 type ipInfo struct {
-	country  string
-	location string
-	local    string
-	City     string
-	Area     string
-	Isp      string
-	Ip       string
-	Code     int
-	Desc     string
+	Code string
+	Data struct {
+		Myip string
+		IP   struct {
+			Query string
+			Start string
+			End   string
+		}
+		Location string
+		Country  string
+		Local    string
+	}
 }
 
 func TestGetOutBoundIP(t *testing.T) {
@@ -49,14 +64,11 @@ func Test2(t *testing.T) {
 		os.Exit(1)
 	}
 	ip := ipInfo{}
-	fmt.Printf("result is :%s\n", data)
+	// fmt.Printf("result is :%s\n", data)
 	json.Unmarshal(data, &ip)
-	if ip.Code == 200 {
-		fmt.Printf("query success! %v\n", ip)
-		fmt.Println(ip.country)
+	// fmt.Printf(ip.Data.Country)
+	for _, val := range strings.Split(ip.Data.Country, "\t") {
+		fmt.Println(val)
 	}
-}
-
-func main() {
 
 }

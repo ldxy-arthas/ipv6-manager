@@ -2,7 +2,7 @@ package model
 
 type Ipv6Info struct {
 	Id         string
-	RegionId   int
+	Region     string
 	Ipv6       string
 	IsUsed     uint
 	CreateTime string

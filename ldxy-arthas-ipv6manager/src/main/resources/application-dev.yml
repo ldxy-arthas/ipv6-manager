@@ -10,6 +10,8 @@ spring:
     mongodb:
       uri: mongodb://localhost:27017/ipv6_manager
       database: ipv6_manager
+      username: piv6
+      password: 1998
 
     redis:
       database: 6
