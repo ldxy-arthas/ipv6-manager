@@ -17,6 +17,10 @@ export default defineConfig({
   ],
   // 解决跨域
   server: {
+    host: '0.0.0.0',//ip地址
+    port: 80, // 设置服务启动端口号
+    open: true, // 设置服务启动时是否自动打开浏览器
+
     proxy: {
       '/api': {
         target: 'http://127.0.0.1:9010',

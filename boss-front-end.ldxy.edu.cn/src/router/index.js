@@ -1,4 +1,3 @@
-// 引入方法
 import { createRouter, createWebHashHistory } from 'vue-router'
 const routes = [
     {
@@ -11,87 +10,104 @@ const routes = [
         path: '/',
         name: 'Index',
         history: true,
-        redirect: '/schoolinfo',
+        redirect: '/home',
         meta: {
             isShow: true,
             title: '主页',
             role: [],
             icon: 'Location'
         },
-        component: () => import('@/pages/index.vue'),
+        component: () => import('@/pages/Index.vue'),
         children: [
             {
-                path: '/schoolinfo',
-                name: 'schoolinfo',
+                path: '/home',
+                name: 'home',
                 history: true,
                 meta: {
                     isShow: true,
-                    title: '学校概况',
+                    title: 'ipv6信息',
                     role: [],
                     icon: 'House'
                 },
                 // 父级必须要定义出口 新建一个空的vue页面在里面添加子路由
-                component: () => import('@/pages/school/schoolInfo.vue'),
+                component: () => import('@/pages/manager/Ipv6Manager.vue'),
             },
             {
-                path: '/orginfo',
-                name: 'orginfo',
+                path: '/fun',
+                name: 'function',
+                history: true,
                 meta: {
                     isShow: true,
-                    title: '学院概况',
+                    title: '功能列表',
                     role: [],
-                    icon: 'Connection'
+                    icon: 'Position'
                 },
                 // 父级必须要定义出口 新建一个空的vue页面在里面添加子路由
-                component: () => import('@/pages/org/orgInfo.vue'),
-
+                component: () => import('@/pages/manager/Ipv6Operation.vue'),
             },
             {
-                path: '/classinfo',
-                name: 'classinfo',
+                path: '/user',
+                name: 'user',
+                history: true,
                 meta: {
                     isShow: true,
-                    title: '班级概况',
+                    title: '用户管理',
                     role: [],
-                    icon: 'OfficeBuilding'
+                    icon: 'User'
                 },
                 // 父级必须要定义出口 新建一个空的vue页面在里面添加子路由
-                component: () => import('@/pages/class/classInfo.vue'),
+                component: () => import('@/pages/system/UserManager.vue'),
             },
             {
-                path: '/updatestudentifno',
-                name: 'updatestudentifno',
+                path: '/person',
+                name: 'person',
+                history: true,
                 meta: {
                     isShow: true,
-                    title: '学生信息补充',
+                    title: '用户信息',
                     role: [],
-                    icon: 'Cherry'
+                    icon: 'ChatDotRound'
                 },
-                component: () => import('@/pages/updateStudentInfo/updateStudentInfo.vue'),
+                // 父级必须要定义出口 新建一个空的vue页面在里面添加子路由
+                component: () => import('@/pages/system/Personal.vue'),
             },
-            // {
-            //     path: '/personal',
-            //     name: 'personal',
-            //     meta: {
-            //         isShow: true,
-            //         title: '个人中心',
-            //         role: [],
-            //         icon: 'Cherry'
-            //     },
-            //     component: () => import('@/pages/system/personal.vue')
-            // },
-            // {
-            //     path: '/system',
-            //     name: 'system',
-            //     meta: {
-            //         isShow: false,
-            //         title: '设置',
-            //         role: [],
-            //         icon: 'Setting'
-            //     },
-            //     component: () => import('@/pages/system/system.vue'),
-
-            // },
+            {
+                path: '/log',
+                name: 'Logger',
+                history: true,
+                redirect: '/userLog',
+                meta: {
+                    isShow: true,
+                    title: '日志信息',
+                    icon: 'ChatSquare'
+                },
+                // 父级必须要定义出口 新建一个空的vue页面在里面添加子路由
+                component: () => import('@/pages/system/log/Logger.vue'),
+                children: [
+                    {
+                        path: '/sysLog',
+                        name: 'SysLogger',
+                        history: false,
+                        meta: {
+                            isShow: true,
+                            title: '系统日志',
+                        },
+                        // 父级必须要定义出口 新建一个空的vue页面在里面添加子路由
+                        component: () => import('@/pages/system/log/SysLogger.vue'),
+                    },
+                    {
+                        path: '/userLog',
+                        name: 'UserLogger',
+                        history: true,
+                        meta: {
+                            isShow: true,
+                            title: '用户日志',
+                        },
+                        // 父级必须要定义出口 新建一个空的vue页面在里面添加子路由
+                        component: () => import('@/pages/system/log/UserLogger.vue'),
+                    },
+                ]
+            },
         ]
     },
 
@@ -109,7 +125,5 @@ const router = createRouter({
     history: createWebHashHistory(),
     routes
 })
-
-
 
 export default router

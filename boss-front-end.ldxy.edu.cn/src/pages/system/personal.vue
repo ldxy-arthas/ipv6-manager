@@ -56,11 +56,6 @@
               </div>
               <br />
               <div class="pb-2 text-gray-400">
-                <span class="pr-3">手机号码:</span>
-                <span class="float-right"></span>
-              </div>
-              <br />
-              <div class="pb-2 text-gray-400">
                 <span class="pr-3">电话:</span>
                 <span class="float-right"></span>
               </div>
@@ -119,12 +114,8 @@
                       autocomplete="off"
                     />
                   </el-form-item>
-                  <el-form-item label="手机号">
-                    <el-input
-                      v-model="userForm.phone"
-                      type="text"
-                      autocomplete="off"
-                    />
+                  <el-form-item label="密码">
+                    <el-input type="text" autocomplete="off" />
                   </el-form-item>
                   <el-form-item>
                     <el-button type="primary" @click="upUserData(userForm)"
