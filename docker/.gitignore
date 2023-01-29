@@ -1,0 +1,7 @@
+**/logs
+
+**/*.jar
+
+mongo/data
+
+nginx/html/**

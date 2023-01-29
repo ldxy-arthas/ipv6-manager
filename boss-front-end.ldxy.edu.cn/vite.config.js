@@ -17,10 +17,12 @@ export default defineConfig({
   ],
   // 解决跨域
   server: {
+    port: 7000, // 设置服务启动端口号
+    open: true, // 设置服务启动时是否自动打开浏览器
+
     proxy: {
       '/api': {
-        target: 'http://127.0.0.1:9010',
-        // target:'http://ceshi13.dishait.cn',
+        target: 'http://59.74.224.30:9010',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '')
       }

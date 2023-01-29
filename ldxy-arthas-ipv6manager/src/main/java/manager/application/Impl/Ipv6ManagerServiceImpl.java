@@ -2,9 +2,9 @@ package manager.application.Impl;
 
 import jakarta.annotation.Resource;
 import manager.application.Ipv6ManagerService;
-import manager.domain.ipv6.examine.Ipv6Examine;
 import manager.domain.ipv6.model.entity.TIpv6Info;
 import manager.repository.impl.Ipv6Repository;
+
 import org.springframework.stereotype.Component;
 
 import java.util.List;

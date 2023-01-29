@@ -1,13 +1,13 @@
-version: '3.8'
+version: '3.3'
 
 # 除了80端口是浏览器访问的，其他的端口都是容器所在的内部网络开放
 # 不用映射其他端口出来，如果需要外部访问数据库的话，可以把27017映射到主机的其他端口上面来
 services:
 
-  system-service:
+  collect-service:
     image: ${DOCKER_PREFIX}-service-collect
     build:
-      dockerfile: ${DOCKERFILE}
+      dockerfile: ${COLLECT_DOCKERFILE}
       context: .
       args:
         APP_HOME: ${APP_HOME}
@@ -16,8 +16,8 @@ services:
     environment:
       - SERVER_PORT=${COLLECT_SERVICE_PORT}
     volumes:
-      - ${SYSTEM_SERVICE}:${APP_HOME}   # 将jar包映射进来
-      - ./apps/logs:/service/logs       # 将springboot应用的日志映射出来
+      - ${COLLECT_SERVICE}:${APP_HOME} # 将APP映射进来
+      - ./apps/logs:/service/logs # 将应用的日志映射出来
       - /etc/localtime:/etc/localtime
     expose:
       - ${COLLECT_SERVICE_PORT}
@@ -27,7 +27,7 @@ services:
   manager-service:
     image: ${DOCKER_PREFIX}-service-manager
     build:
-      dockerfile: ${DOCKERFILE}
+      dockerfile: ${MANAGER_DOCKERFILE}
       context: .
       args:
         APP_HOME: ${APP_HOME}
@@ -36,8 +36,8 @@ services:
     environment:
       - SERVER_PORT=${MANAGER_SERVICE_PORT}
     volumes:
-      - ${STUDENT_SERVICE}:${APP_HOME}   # 将jar包映射进来
-      - ./apps/logs:/service/ldxy-cloud-platform/logs        # 将springboot应用的日志映射出来
+      - ${MANAGER_SERVICE}:${APP_HOME} # 将jar包映射进来
+      - ./apps/logs:/service/ldxy-cloud-platform/logs # 将springboot应用的日志映射出来
       - /etc/localtime:/etc/localtime
     expose:
       - ${MANAGER_SERVICE_PORT}
@@ -49,10 +49,10 @@ services:
     container_name: ${DOCKER_PREFIX}-nginx
     restart: always
     volumes:
-      - ./nginx/conf/conf.d:/etc/nginx/conf.d  # 里面的default.conf是nginx的配置
-      - ./nginx/html:/usr/share/nginx/html     # 前端的页面放在这里
-      - ./nginx/logs:/var/log/nginx            # 把log映射出来
-      - ./files:/usr/share/nginx/files         # 上传的所有静态文件都在这里
+      - ./nginx/conf/conf.d:/etc/nginx/conf.d # 里面的default.conf是nginx的配置
+      - ./nginx/html:/usr/share/nginx/html # 前端的页面放在这里
+      - ./nginx/logs:/var/log/nginx # 把log映射出来
+      - ./files:/usr/share/nginx/files # 上传的所有静态文件都在这里
     ports:
       - "443:443"
     networks:
@@ -66,7 +66,7 @@ services:
       - ./redis/data:/data
       - ./redis/conf/redis.conf:/usr/local/etc/redis/redis.conf
       - ./redis/logs:/logs
-    command: ["redis-server","/usr/local/etc/redis/redis.conf"]
+    command: [ "redis-server", "/usr/local/etc/redis/redis.conf" ]
     expose:
       - ${REDIS_PORT}
     environment:
@@ -85,12 +85,12 @@ services:
     expose:
       - ${MONGODB_PORT}
     environment:
-        TZ: Asia/Shanghai
-        MONGO_INITDB_ROOT_USERNAME: admin
-        MONGO_INITDB_ROOT_PASSWORD: admin@123
+      TZ: Asia/Shanghai
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin@123
     networks:
       - manager
-      -
+
   portainer:
     image: portainer/portainer:latest
     container_name: ${DOCKER_PREFIX}-portainer
@@ -102,7 +102,9 @@ services:
       TZ: Asia/Shanghai
     ports:
       - "9000:9000"
+    networks:
+      - manager
 
 networks:
-  nginx:
+  manager:
     external: true

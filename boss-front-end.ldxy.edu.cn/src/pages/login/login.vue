@@ -1,7 +1,7 @@
 <template>
   <div class="index">
     <div class="login">
-      <h3>欢迎使用陇东学院疫情采样系统</h3>
+      <h3>欢迎使用IPV6管理系统</h3>
       <el-form
         ref="formRef"
         :label-position="labelPosition"
@@ -101,50 +101,35 @@ const formRef = ref(null);
 const onSubmit = () => {
   if (formLabelAlign.username === "" && formLabelAlign.password === "") {
     elError("用户名或密码不能为空");
-  } else {
-    formRef.value.validate((valid) => {
-      if (!valid) {
-        return false;
-      } else {
-        loading.value = true;
-        // userLogin(formLabelAlign.username, formLabelAlign.password)
-        //     .then(res => {
-        //         console.log('用户登录拿到token',res.code)
-        //         if (res.code > 20000 && res.code < 30000) {
-        //             // success(res.msg)
-        //             console.log(res)
-        //             setToken(res.data.tokenInfo.token)
-        //             loading.value = false
-        //             router.push("/home")
-        //         } else {
-        //             elError(res.msg)
-        //             loading.value = false
-        //         }
-        //     })
-        //     .catch(err => {
-
-        //     })
-        store
-          .dispatch("login", formLabelAlign)
-          .then((res) => {
-            if (res.code > 20000 && res.code < 30000) {
-              // success(res.msg)
-              // console.log(res)
-              setToken(res.data.tokenInfo.token);
-              loading.value = false;
-              router.push("/");
-            } else {
-              elError(res.msg);
-              loading.value = false;
-            }
-          })
-          .finally(() => {
-            loading.value = false;
-          });
-      }
-    });
   }
-  //  router.push("/")
+  // 暂时屏蔽
+  // else {
+  //   formRef.value.validate((valid) => {
+  //     if (!valid) {
+  //       return false;
+  //     } else {
+  //       loading.value = true;
+  //       store
+  //         .dispatch("login", formLabelAlign)
+  //         .then((res) => {
+  //           if (res.code > 20000 && res.code < 30000) {
+  //             // success(res.msg)
+  //             // console.log(res)
+  //             setToken(res.data.tokenInfo.token);
+  //             loading.value = false;
+  //             router.push("/");
+  //           } else {
+  //             elError(res.msg);
+  //             loading.value = false;
+  //           }
+  //         })
+  //         .finally(() => {
+  //           loading.value = false;
+  //         });
+  //     }
+  //   });
+  // }
+  router.push("/");
 };
 // 监听回车事件
 function onKeyUp(e) {
@@ -176,7 +161,10 @@ body,
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
-  background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);
+  background-image: url(https://p7.itc.cn/q_70/images03/20211215/af0f644e0d1f4fbb8883f4e337a92bbe.jpeg);
+  background-size: 100% 100%;
+  background-attachment: fixed;
+  /* background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%); */
 }
 
 h3 {
@@ -184,6 +172,8 @@ h3 {
   font-size: 22px;
   text-align: center;
   line-height: 9vh;
+  color: rgb(246, 252, 252);
+  font-family: "Courier New", Courier, monospace;
 }
 
 .btn {
