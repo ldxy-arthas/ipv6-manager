@@ -8,14 +8,12 @@ management:
 spring:
   data:
     mongodb:
-      uri: mongodb://112.74.111.23:27017
+      uri: mongodb://ipv6:1998@112.74.111.23:27017/?authSource=ipv6_manager
       database: ipv6_manager
-      username: ipv6
-      password: 1998
 
     redis:
       database: 6
-      host: 112.74.111.23
+      host: 127.0.0.1
       password: '082916'
       lettuce:
         pool:
@@ -23,3 +21,4 @@ spring:
           max-active: 8
           max-wait: -1
           min-idle: 0
+

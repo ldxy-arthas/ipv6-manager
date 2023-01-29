@@ -22,4 +22,6 @@ public record LoggerService() {
 
     public static final Logger captchaServiceLogger = LoggerFactory.getLogger(ClassNameEnum.CAPTCHA_SERVICE.getDes());
 
+    public static final Logger AdminServiceManagerLogger = LoggerFactory.getLogger(ClassNameEnum.ADMIN_SERVICE.getDes());
+
 }

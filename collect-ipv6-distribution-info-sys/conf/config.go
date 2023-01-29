@@ -27,7 +27,7 @@ var (
 // Init 初始化配置
 func Init() {
 	// 本地读取环境变量  注意：此路径是从main.go开始算起的路径
-	file, err := ini.Load("../../conf/config.ini")
+	file, err := ini.Load("./conf/config.ini")
 	if err != nil {
 		// 处理读取配置文件异常
 		// panic 直译为 运行时恐慌 当panic被抛出异常后，如果我们没有在程序中添加任何保护措施的话，程序就会打印出panic的详细情况之后，终止运行

@@ -46,19 +46,6 @@ const routes = [
                 component: () => import('@/pages/manager/Ipv6Operation.vue'),
             },
             {
-                path: '/user',
-                name: 'user',
-                history: true,
-                meta: {
-                    isShow: true,
-                    title: '用户管理',
-                    role: [],
-                    icon: 'User'
-                },
-                // 父级必须要定义出口 新建一个空的vue页面在里面添加子路由
-                component: () => import('@/pages/system/UserManager.vue'),
-            },
-            {
                 path: '/person',
                 name: 'person',
                 history: true,
@@ -70,6 +57,19 @@ const routes = [
                 },
                 // 父级必须要定义出口 新建一个空的vue页面在里面添加子路由
                 component: () => import('@/pages/system/Personal.vue'),
+            },
+            {
+                path: '/user',
+                name: 'user',
+                history: true,
+                meta: {
+                    isShow: true,
+                    title: '用户管理',
+                    role: [],
+                    icon: 'User'
+                },
+                // 父级必须要定义出口 新建一个空的vue页面在里面添加子路由
+                component: () => import('@/pages/system/UserManager.vue'),
             },
             {
                 path: '/log',

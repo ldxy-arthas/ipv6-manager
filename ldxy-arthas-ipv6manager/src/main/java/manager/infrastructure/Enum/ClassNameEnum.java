@@ -11,7 +11,8 @@ public enum ClassNameEnum {
     AUTHENTICATION_SERVICE_IMPL("manager.domain.system.service.auth.impl.AuthenticationServiceImpl"),
     LOG_SERVICE_IMPL("manager.domain.system.service.log.impl.LogServiceImpl"),
     SYSTEM_SERVICE_MANAGER("manager.application.SystemServiceManager"),
-    CAPTCHA_SERVICE("manager.infrastructure.captcha.CaptchaService");
+    CAPTCHA_SERVICE("manager.infrastructure.captcha.CaptchaService"),
+    ADMIN_SERVICE("manager.application.AdminServiceManager");
 
     private String des;
 
@@ -23,7 +24,4 @@ public enum ClassNameEnum {
         return des;
     }
 
-    public void setDes(String des) {
-        this.des = des;
-    }
 }

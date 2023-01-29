@@ -25,6 +25,8 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
 
+import static manager.infrastructure.utils.Security.SecurityUtils.decrypt;
+
 /**
  * @Author: yuluo
  * @CreateTime: 2023-1-08 17:49
@@ -55,11 +57,16 @@ public class LogAspect {
            // 获取当前的用户
             HttpServletRequest request = AspectjUtils.getRequest();
             String token = request.getHeader("Authorization").substring(7);
-            TUser curUser = LoginUserCache.get(token);
+
+            TUser curUser = LoginUserCache.get(decrypt(token));
             log.info("用户：{}", curUser);
 
             // 日志记录
             TLog operaLog = new TLog();
+
+            // 设置操作人员
+            operaLog.setOperName(curUser.getUsername());
+
             operaLog.setStatus(0);
 
             // 请求的IP地址
@@ -69,9 +76,7 @@ public class LogAspect {
             }
             operaLog.setOperIp(iP);
             operaLog.setOperUrl(request.getRequestURI());
-            if (curUser != null) {
-                operaLog.setOperName(curUser.getUsername());
-            }
+
             if (e != null) {
                 operaLog.setStatus(1);
                 operaLog.setErrorMsg(AspectjUtils.substring(e.getMessage(), 0, 2000));
