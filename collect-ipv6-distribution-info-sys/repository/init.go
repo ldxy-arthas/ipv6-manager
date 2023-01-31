@@ -30,6 +30,7 @@ func Init() {
 
 	err = CheckDbConnection()
 	if err != nil {
+		logger.LogrusObj.Infof("init db connection failed: err:%v", err)
 		return
 	}
 
