@@ -5,3 +5,7 @@
 mongo/data
 
 nginx/html/**
+
+redis/data
+
+portainer/data

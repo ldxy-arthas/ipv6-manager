@@ -1,7 +1,5 @@
 version: '3.3'
 
-# 除了80端口是浏览器访问的，其他的端口都是容器所在的内部网络开放
-# 不用映射其他端口出来，如果需要外部访问数据库的话，可以把27017映射到主机的其他端口上面来
 services:
 
   collect-service:
@@ -15,12 +13,13 @@ services:
     restart: always
     environment:
       - SERVER_PORT=${COLLECT_SERVICE_PORT}
+      - MONGODB_URI=mongodb://admin:admin123@mongo:27017/admin
     volumes:
-      - ${COLLECT_SERVICE}:${APP_HOME} # 将APP映射进来
-      - ./apps/logs:/service/logs # 将应用的日志映射出来
+      - ${COLLECT_SERVICE}:${APP_HOME} # 将main映射进来
+      - ./apps/collect/logs:/service/ipv6-manager/logs # 将应用的日志映射出来
       - /etc/localtime:/etc/localtime
-    expose:
-      - ${COLLECT_SERVICE_PORT}
+    ports:
+      - "3000:3000"
     networks:
       - manager
 
@@ -35,12 +34,13 @@ services:
     restart: always
     environment:
       - SERVER_PORT=${MANAGER_SERVICE_PORT}
+      - MONGODB_URI=mongodb://admin:admin123@mongo:27017/admin
     volumes:
       - ${MANAGER_SERVICE}:${APP_HOME} # 将jar包映射进来
-      - ./apps/logs:/service/ldxy-cloud-platform/logs # 将springboot应用的日志映射出来
+      - ./apps/manager/logs:/service/ipv6-manager/logs # 将springboot应用的日志映射出来
       - /etc/localtime:/etc/localtime
-    expose:
-      - ${MANAGER_SERVICE_PORT}
+    ports:
+      - "8080:8080"
     networks:
       - manager
 
@@ -53,6 +53,7 @@ services:
       - ./nginx/html:/usr/share/nginx/html # 前端的页面放在这里
       - ./nginx/logs:/var/log/nginx # 把log映射出来
       - ./files:/usr/share/nginx/files # 上传的所有静态文件都在这里
+      - ./nginx/conf/conf.d/ssl:/etc/nginx/conf.d/ssl # ssl证书
     ports:
       - "443:443"
     networks:
@@ -67,27 +68,31 @@ services:
       - ./redis/conf/redis.conf:/usr/local/etc/redis/redis.conf
       - ./redis/logs:/logs
     command: [ "redis-server", "/usr/local/etc/redis/redis.conf" ]
-    expose:
-      - ${REDIS_PORT}
+    ports:
+      - "6379:6379"
     environment:
       - TZ="Asia/Shanghai"
     networks:
       - manager
 
   mongo:
-    image: mongo:latest
-    container_name: ${DOCKER_PREFIX}-mongodb
+    image: mongo:latest #根据需要选择自己的镜像
     restart: always
+    container_name: ${DOCKER_PREFIX}-mongo
+    ports:
+      - 27017:27017 #对外暴露停供服务的端口，正式生产的时候理论不用暴露。
     volumes:
-      - ./mongo/data:/data/db
-      - /etc/localtime:/etc/localtime
-    command: --wiredTigerCacheSizeGB 4 --auth # 限制内存大小, 需要认证
-    expose:
-      - ${MONGODB_PORT}
+      - ./mongo/data:/data/db # 前面是外面映射的，后面是容器内的挂载数据目录
+      - ./mongo/log:/data/log # 挂载日志目录
+      - ./mongo/conf:/etc/mongo # 挂载配置目录
+      - ./mongo/mongo-init.sh:/docker-entrypoint-initdb.d/mongo-init.sh # 初始化脚本
     environment:
       TZ: Asia/Shanghai
       MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: admin@123
+      MONGO_INITDB_ROOT_PASSWORD: admin123
+      MONGO_INITDB_DATABASE: ipv6_manager
+      MONGO_USERNAME: ipv6
+      MONGO_PASSWORD: ipv6
     networks:
       - manager
 

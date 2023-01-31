@@ -1,0 +1,16 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://admin:admin123@mongo:27017/?authSource=admin
+      database: ipv6_manager
+
+    redis:
+      database: 0
+      host: redis
+      password: ipv6@manager
+      lettuce:
+        pool:
+          enabled: true
+          max-active: 8
+          max-wait: -1
+          min-idle: 0
