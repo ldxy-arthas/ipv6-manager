@@ -38,6 +38,27 @@
           </el-input>
         </el-form-item>
         <el-form-item>
+          <el-input
+            v-model="formLabelAlign.password"
+            placeholder="请输入验证码"
+            type="text"
+            size="large"
+            show-password
+          >
+            <template #prefix>
+              <el-icon>
+                <Location />
+              </el-icon>
+            </template>
+            <template #suffix>
+              <el-image
+                style="width: 100px; height: 40px; background-color: green"
+                :src="url"
+              />
+            </template>
+          </el-input>
+        </el-form-item>
+        <el-form-item>
           <el-button
             type="primary"
             @click="onSubmit"
@@ -60,17 +81,21 @@ import { useRouter } from "vue-router";
 import { success, elError } from "@/util/util.js";
 import { login } from "@/api/manager.js";
 import { setToken } from "@/util/auth.js";
-
+import * as storage from "@/util/browserStorage.js";
+import { getCode } from "@/api/api.js";
 // 调用vuex的方法
 import { useStore } from "vuex";
+import { ElMessage } from "element-plus";
+
 const store = useStore();
 const router = useRouter();
 const loading = ref(false);
 
 const labelPosition = ref("right");
 const formLabelAlign = reactive({
-  username: "admin",
-  password: "admin",
+  username: "",
+  password: "",
+  code: "",
   type: "",
 });
 const rules = {
@@ -96,11 +121,23 @@ const rules = {
       trigger: "blur",
     },
   ],
+  code: [
+    {
+      required: true,
+      // 验证提示
+      message: "验证码不能为空",
+      trigger: "blur",
+    },
+  ],
 };
 const formRef = ref(null);
 const onSubmit = () => {
-  if (formLabelAlign.username === "" && formLabelAlign.password === "") {
-    elError("用户名或密码不能为空");
+  if (
+    formLabelAlign.username === "" &&
+    formLabelAlign.password === "" &&
+    formLabelAlign.code === ""
+  ) {
+    elError("用户名或密码、验证码不能为空");
   }
   // 暂时屏蔽
   // else {
@@ -141,10 +178,33 @@ function onKeyUp(e) {
   }
 }
 
-// 页面加载之前添加键盘监听
+const url = ref("");
+// 获取验证码
+const getLoginCode = async () => {
+  await getCode()
+    .then((res) => {
+      if (res.code == 8291) {
+        console.log(res);
+        // 处理验证码数据
+        url.value = "data:image/png;base64," + res.data.base64ImgEncoding;
+        // 存
+        storage.saveToLocalStorage("key", res.data.codeKey);
+        console.log(url.value);
+      }
+    })
+    .catch((err) => {
+      elError(err.response || "请求失败！");
+    });
+};
+
 onMounted(() => {
+  // 获取验证码
+  getLoginCode();
+
+  // 页面加载之前添加键盘监听
   document.addEventListener("keyup", onKeyUp);
 });
+
 // 页面卸载之前移除键盘监听
 onBeforeUnmount(() => {
   document.removeEventListener("keyup", onKeyUp);

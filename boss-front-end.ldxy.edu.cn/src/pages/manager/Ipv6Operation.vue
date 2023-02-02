@@ -44,15 +44,86 @@
         </el-card>
       </div></el-card
     >
+    <el-card class="card" shadow="hover"
+      ><div>
+        <h3 class="title">系统检测</h3>
+        <el-card shadow="always">
+          <div class="btn">
+            <el-button type="primary" plain @click="collectSys"
+              >ipv6收集系统检测</el-button
+            >
+            <br />
+            <br />
+            <br />
+            <el-button type="primary" plain @click="managerSys"
+              >ipv6管理系统检测</el-button
+            >
+          </div>
+        </el-card>
+      </div></el-card
+    >
   </div>
+
+  <el-dialog
+    v-model="successDialogVisible"
+    title="Tips"
+    width="30%"
+    :before-close="handleClose"
+  >
+    <span
+      >系统运行<span style="color: rgb(103, 194, 58); font-size: 16px"
+        >正常！</span
+      ></span
+    >
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="successDialogVisible = false">结束</el-button>
+        <el-button type="primary" @click="successDialogVisible = false">
+          确定
+        </el-button>
+      </span>
+    </template>
+  </el-dialog>
+
+  <el-dialog
+    v-model="failedDialogVisible"
+    title="Tips"
+    width="30%"
+    :before-close="handleClose"
+  >
+    <span
+      >系统运行
+      <span style="color: red; font-size: 16px">出错</span>
+      ，请检查服务器运行状态！！！</span
+    >
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="failedDialogVisible = false">结束</el-button>
+        <el-button type="primary" @click="failedDialogVisible = false">
+          确定
+        </el-button>
+      </span>
+    </template>
+  </el-dialog>
 </template>
 <script lang="ts" setup>
 import { onMounted, ref } from "vue";
 import { ElNotification } from "element-plus";
 
+const successDialogVisible = ref<Boolean>(false);
+const failedDialogVisible = ref<Boolean>(false);
+
 onMounted(() => {
   open();
 });
+
+const collectSys = () => {
+  successDialogVisible.value = true;
+};
+
+const managerSys = () => {
+  failedDialogVisible.value = true;
+};
 
 const inputMac = ref("");
 const inputIpv6 = ref("");
@@ -69,6 +140,7 @@ const open = () => {
 
 <style>
 .index {
+  margin-top: 6vh;
   display: flex;
   justify-content: space-around;
 }
