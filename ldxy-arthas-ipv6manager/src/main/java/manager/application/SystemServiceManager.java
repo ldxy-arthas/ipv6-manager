@@ -42,7 +42,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class SystemServiceManager extends DefaultServiceManager {
+public class SystemServiceManager  {
 
 	private final AuthenticationService authenticationService;
 
