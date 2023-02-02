@@ -14,11 +14,9 @@ service.interceptors.response.use((response) => {
   return response;
 }, function (error) {
   //这里的error就是请求接口以后回调的错误数据
-  elError(error.response.data || '请求失败')
+  // elError(error.response.data || '请求失败')
   return Promise.reject(error.response);
 });
-
-
 
 // 添加请求拦截器
 service.interceptors.request.use((config) => {
