@@ -138,35 +138,33 @@ const onSubmit = () => {
     formLabelAlign.code === ""
   ) {
     elError("用户名或密码、验证码不能为空");
+  } else {
+    formRef.value.validate((valid) => {
+      if (!valid) {
+        return false;
+      } else {
+        loading.value = true;
+        store
+          .dispatch("login", formLabelAlign)
+          .then((res) => {
+            if (res.code == 8291) {
+              // success(res.msg)
+              // console.log(res)
+              setToken(res.data.token);
+              loading.value = false;
+              router.push("/");
+            } else {
+              elError(res.msg);
+              loading.value = false;
+            }
+          })
+          .finally(() => {
+            loading.value = false;
+          });
+      }
+    });
   }
-  // 暂时屏蔽
-  // else {
-  //   formRef.value.validate((valid) => {
-  //     if (!valid) {
-  //       return false;
-  //     } else {
-  //       loading.value = true;
-  //       store
-  //         .dispatch("login", formLabelAlign)
-  //         .then((res) => {
-  //           if (res.code > 20000 && res.code < 30000) {
-  //             // success(res.msg)
-  //             // console.log(res)
-  //             setToken(res.data.tokenInfo.token);
-  //             loading.value = false;
-  //             router.push("/");
-  //           } else {
-  //             elError(res.msg);
-  //             loading.value = false;
-  //           }
-  //         })
-  //         .finally(() => {
-  //           loading.value = false;
-  //         });
-  //     }
-  //   });
-  // }
-  router.push("/");
+  // router.push("/");
 };
 // 监听回车事件
 function onKeyUp(e) {
@@ -184,7 +182,7 @@ const getLoginCode = async () => {
   await getCode()
     .then((res) => {
       if (res.code == 8291) {
-        console.log(res);
+        // console.log(res);
         // 处理验证码数据
         url.value = "data:image/png;base64," + res.data.base64ImgEncoding;
         // 存
