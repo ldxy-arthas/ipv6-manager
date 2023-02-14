@@ -8,7 +8,6 @@ exemptLabels:
   - "contribution welcome"
   - "good first issue"
   - "discussion"
-  - "bug"
 
 # Set to true to ignore issues in a milestone (defaults to false)
 exemptMilestones: true
