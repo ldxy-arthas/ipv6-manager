@@ -6,4 +6,5 @@ type CollectionInfoStatus struct {
 	Status         string
 	CollectionIp   string
 	Content        string
+	Ipv6           Ipv6Info
 }

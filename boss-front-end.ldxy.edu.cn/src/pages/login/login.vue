@@ -132,6 +132,8 @@ const rules = {
 };
 const formRef = ref(null);
 const onSubmit = () => {
+  console.log("点击了登录按钮 sdgasdga");
+
   if (
     formLabelAlign.username === "" &&
     formLabelAlign.password === "" &&

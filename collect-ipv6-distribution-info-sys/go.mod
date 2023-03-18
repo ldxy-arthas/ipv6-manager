@@ -11,12 +11,16 @@ require (
 )
 
 require (
+	github.com/OhYee/goutils v1.1.5 // indirect
+	github.com/OhYee/rainbow v1.0.9 // indirect
+	github.com/fsnotify/fsnotify v1.4.9 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
 	github.com/go-playground/validator/v10 v10.11.1 // indirect
 	github.com/goccy/go-json v0.9.11 // indirect
 	github.com/golang/snappy v0.0.1 // indirect
+	github.com/howeyc/fsnotify v0.9.0 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.4 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect

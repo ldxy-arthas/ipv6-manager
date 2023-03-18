@@ -40,17 +40,18 @@ func (service Ipv6CollectionService) RunOnceIpv6CollectionAction(ctx context.Con
 
 func (service Ipv6CollectionService) InsertInfo(ctx context.Context) serializer.Response {
 
-	parsingRunRes(ctx)
+	var ipv6Collection model.Ipv6Info
 
-	var ipv6Collection *model.Ipv6Info
+	ipv6Collection = parsingRunRes(ctx)
+
 	code := e.Success
 
-	// TODO: 解析content从中获取ipv6info实体需要的数据 或者也可以在parsingRunRes中进行，直接返回实体
-	//通过upv6获取地区信息(前提是要先获取ipv6)
+	//通过ipv6获取地区信息(前提是要先获取ipv6)
 	var info = getRegion(ipv6Collection.Ipv6)
 	ipv6Collection.Region = info.Data.Country
 	ipv6CollectionDao := repository.NewIpv6Dao()
-	operaId, err := ipv6CollectionDao.SaveInfo(ctx, ipv6Collection)
+
+	operaId, err := ipv6CollectionDao.SaveInfo(ctx, &ipv6Collection)
 	if err != nil {
 		code = e.SaveIpv6CollectionError
 		logrus.Errorf("insert failed err:%s", err)
@@ -69,20 +70,30 @@ func (service Ipv6CollectionService) InsertInfo(ctx context.Context) serializer.
 
 }
 
-// 解析 shell 命令运行之后的运行结果 outStr 可以调整为 Ipv6Info 类型
-func parsingRunRes(ctx context.Context) (outStr string) {
-
-	// TODO: 需要解析执行结果
+// 解析 Run方法 运行之后的运行结果 outStr 可以调整为 Ipv6Info 类型
+func parsingRunRes(ctx context.Context) (ipv6Info model.Ipv6Info) {
 
 	outStr, errStr := shell.Run()
 	fmt.Printf("\nout:\n%s\nerr:\n%s\n", outStr, errStr)
+
+	// 解析执行结果
+	/*
+		假定outStr的输出结果为：暂时只解析出Ipv6Info实体有用的信息
+		lease 10.41.3.100 {
+			starts 6 2021/02/27 01:12:09;
+			ends 6 2021/02/27 01:54:09;
+			cltt 6 2021/02/27 01:54:09;
+			binding state free;
+			hardware ethernet d8:db:8a:77:e3:1c;
+		}
+	*/
 
 	// 保存从dhcp服务器收集ipv6信息时的状态信息（成功或者失败状态，执行shell脚本的响应内容）
 	status, err := checkCollectionStatus(ctx, outStr, errStr)
 
 	fmt.Printf("%v \t %v", status, err)
 
-	return outStr
+	return ipv6Info
 }
 
 // 这里是因为直接将ipv6数据存进数据库中，可能过程中存在数据丢失情况，没有使用消息中间件，所以这么处理了一下，将shell
