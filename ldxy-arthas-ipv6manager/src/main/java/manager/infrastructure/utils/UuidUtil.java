@@ -1,6 +1,5 @@
 package manager.infrastructure.utils;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.UUID;
