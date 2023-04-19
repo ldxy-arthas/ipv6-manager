@@ -16,4 +16,4 @@ jobs:
           close-issue-message: 'This issue was closed because it has been stalled for 7 days with no activity.'
           days-before-issue-stale: 30
           days-before-issue-close: 7
-          stale-issue-label: 'nobot'
+          stale-issue-label: 'stale'
